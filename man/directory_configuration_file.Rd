@@ -29,6 +29,6 @@ read_directory_config(
 \code{list} of directory configurations, \code{\link[base]{invisible}}-ly.
 }
 \description{
-The directory configuration file is a special file within the portalcasting directory setup and has its own set of functions. \cr \cr
+The directory configuration file is a special file within the forecasting directory setup and has its own set of functions. \cr \cr
              \code{write_directory_config} creates the YAML metadata configuration file. It is (and should only be) called from within \code{\link{setup_dir}}, as it captures information about the compute environment used to instantiate the directory.
 }

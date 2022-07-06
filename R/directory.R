@@ -18,7 +18,7 @@ create_dir <- function(main     = ".",
                        settings = directory_settings(), 
                        quiet    = FALSE){
 
-  messageq(message_break(), "\nEstablishing portalcasting directory at\n ", normalizePath(file.path(main = main), mustWork = FALSE), "\n", message_break(), quiet = quiet)
+  messageq(message_break(), "\nEstablishing forecasting directory at\n ", normalizePath(file.path(main = main), mustWork = FALSE), "\n", message_break(), quiet = quiet)
 
   mapply(FUN          = dir.create, 
          path         = file.path(main, settings$subs),
@@ -118,7 +118,7 @@ directory_settings <- function (directory_config_file = "dir_config.yaml",
 
 #' @title Create, Read the Directory Configuration File
 #' 
-#' @description The directory configuration file is a special file within the portalcasting directory setup and has its own set of functions. \cr \cr
+#' @description The directory configuration file is a special file within the forecasting directory setup and has its own set of functions. \cr \cr
 #'              \code{write_directory_config} creates the YAML metadata configuration file. It is (and should only be) called from within \code{\link{setup_dir}}, as it captures information about the compute environment used to instantiate the directory.
 #'
 #' @param quiet \code{logical} indicator if progress messages should be quieted.

@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{Allometries and conversions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,6 +23,7 @@ This tutorial shows a basic intro to the evercast package.
 
 ```
 
-This tutorial reviews tools that use allometries to estima
+
+
 
 # References

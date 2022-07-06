@@ -1,0 +1,34 @@
+Package: evercast
+Title: Functions Used in Predicting Everglades Wading Birds
+Version: 0.43.0
+Authors@R: c(
+    person(c("Juniper", "L."), "Simonis",
+      email = "juniper.simonis@weecology.org", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-9798-0460")),
+    person(c("Glenda", "M."), "Yenni", role = c("aut"), 
+    person("Henry", "Senyondo", role = c("aut"),
+      comment = c(ORCID = "0000-0001-7105-5808")),
+	person(c("Ethan", "P."), "White", role = c("aut"),
+      comment = c(ORCID = "0000-0001-6728-7745")),
+    person(c("S.K.", "Morgan"), "Ernest", role = c("aut"),
+      comment = c(ORCID = "0000-0002-6026-8530")))
+Description: Create a directory, populate it with data, build models, forecast wading bird populations, and visualize the results. 
+URL: https://weecology.github.io/evercast, https://github.com/weecology/evercast
+BugReports: https://github.com/weecology/evercast/issues
+Depends: R (>= 3.5.0)
+License: MIT + file LICENSE
+LazyData: true
+Imports:
+  wader,
+  yaml
+Remotes:
+  weecology/wader
+Suggests:
+  knitr,
+  pkgdown,
+  markdown,
+  rmarkdown,
+  testthat
+RoxygenNote: 7.2.0
+VignetteBuilder: knitr
+Encoding: UTF-8

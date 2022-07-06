@@ -3,9 +3,16 @@
 \name{directory_configuration_file}
 \alias{directory_configuration_file}
 \alias{write_directory_config}
-\title{Create the Directory Configuration File}
+\alias{read_directory_config}
+\title{Create, Read the Directory Configuration File}
 \usage{
 write_directory_config(
+  main = ".",
+  settings = directory_settings(),
+  quiet = FALSE
+)
+
+read_directory_config(
   main = ".",
   settings = directory_settings(),
   quiet = FALSE

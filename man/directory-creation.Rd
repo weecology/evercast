@@ -20,9 +20,3 @@ The \code{list} of directory settings \code{\link[base]{invisible}}-ly.
 \description{
 Instantiates the necessary folder structure for a forecasting directory and writes a YAML file that tracks the setup configurations (see \code{\link{write_directory_config}}).
 }
-\examples{
-\donttest{
- create_dir()
-}
-
-}

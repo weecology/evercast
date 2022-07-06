@@ -1,0 +1,24 @@
+url: https://weecology.github.io/evercast/
+
+development:
+  mode: auto
+
+navbar:
+  structure:
+    left: [home, articles, reference, news]
+    right: [github] 
+  components: 
+    articles:
+      text: "Vignettes"
+      menu:
+       - text: "Getting Started"
+         href: articles/GettingStarted.html
+    reference: 
+      text: "Functions"
+      href: reference/index.html
+    news: 
+      text: "News"
+      href: news/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/weecology/

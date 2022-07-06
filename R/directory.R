@@ -12,11 +12,6 @@
 #'
 #' @name directory creation
 #'
-#' @examples
-#' \donttest{
-#'  create_dir()
-#' }
-#'
 #' @export
 #'
 create_dir <- function(main     = ".", 
@@ -39,6 +34,50 @@ create_dir <- function(main     = ".",
 }
 
 
+#' @title Create and Fill a Forecasting Directory
+#'
+#' @description Combines \code{\link{create_dir}} and \code{\link{fill_dir}} to create a ready-to-run (via \code{\link{evercast}}) directory where indicated.
+#'
+#' @param main \code{character} value of the name of the main component of the directory tree.
+#'
+#' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
+#'
+#' @param quiet \code{logical} indicator if progress messages should be quieted.
+#'
+#' @param verbose \code{logical} indicator of whether or not to print out all of the information (and thus just the tidy messages).
+#'
+#' @return The \code{list} of directory settings \code{\link[base]{invisible}}-ly.
+#'
+#' @name directory setup
+#'
+#'
+#' @export
+#'
+setup_dir <- function (main     = ".",
+                       settings = directory_settings(), 
+                       quiet    = FALSE, 
+                       verbose  = FALSE) {
+
+  messageq(message_break(), "\nThis is evercast v", packageDescription("evercast", fields = "Version"), "\n", message_break(), quiet = quiet)
+
+  create_dir(main     = main, 
+             settings = settings,
+             quiet    = quiet)
+
+  fill_dir(main     = main,
+           settings = settings,
+           quiet    = quiet,
+           verbose  = verbose)
+
+  messageq(message_break(), "\nDirectory successfully instantiated\n", message_break(), quiet = quiet)
+
+  read_directory_config(main     = main,
+                        settings = settings,
+                        quiet    = quiet)
+
+}
+
+
 
 #' @title Create a Directory Settings List
 #'
@@ -46,7 +85,10 @@ create_dir <- function(main     = ".",
 #'
 #' @param directory_config_file \code{character} value of the path to the directory config YAML.
 #'
-#' @param subdirectories \code{character} vector of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}. 
+#' @param subdirectories named \code{character} list of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}. 
+#'
+#' @param EvergladesWadingBird \code{list} with \code{source} and \code{version} elements that are \code{character} values for the source and version of the Everglades Wading Bird to download. Default values retrieve the latest data from github. \cr \cr
+#'                   See \code{\link[wader]{download_observations}}.
 #'
 #' @param save \code{logical} indicator controlling if the output should be saved out.
 #'
@@ -57,12 +99,14 @@ create_dir <- function(main     = ".",
 #' @export
 #'
 directory_settings <- function (directory_config_file = "dir_config.yaml",
-                                subdirectories        = c("forecasts" = "forecasts", "fits" = "fits", "models" = "models", "resources" = "resources", "data" = "data"),
+                                subdirectories        = list(forecasts = "forecasts", fits = "fits", models = "models", resources = "resources", data = "data"),
+                                EvergladesWadingBird  = list(source = "github", version = "latest"),
                                 save                  = TRUE,
                                 overwrite             = TRUE) {
 
   list(files     = list(directory_config = directory_config_file),
        subs      = subdirectories,
+       resources = list(EvergladesWadingBird = EvergladesWadingBird),
        save      = save, 
        overwrite = overwrite)
 
@@ -72,7 +116,7 @@ directory_settings <- function (directory_config_file = "dir_config.yaml",
 
 
 
-#' @title Create the Directory Configuration File
+#' @title Create, Read the Directory Configuration File
 #' 
 #' @description The directory configuration file is a special file within the portalcasting directory setup and has its own set of functions. \cr \cr
 #'              \code{write_directory_config} creates the YAML metadata configuration file. It is (and should only be) called from within \code{\link{setup_dir}}, as it captures information about the compute environment used to instantiate the directory.
@@ -109,4 +153,18 @@ write_directory_config <- function (main     = ".",
   invisible(config)
 
 }
+
+
+#' @rdname directory_configuration_file
+#'
+#' @export
+#'
+read_directory_config <- function (main     = ".", 
+                                   settings = directory_settings(), 
+                                   quiet    = FALSE){
+
+  invisible(read_yaml(file.path(main, settings$files$directory_config)))
+
+}
+
 

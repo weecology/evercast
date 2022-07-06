@@ -6,8 +6,9 @@
 \usage{
 directory_settings(
   directory_config_file = "dir_config.yaml",
-  subdirectories = c(forecasts = "forecasts", fits = "fits", models = "models",
+  subdirectories = list(forecasts = "forecasts", fits = "fits", models = "models",
     resources = "resources", data = "data"),
+  EvergladesWadingBird = list(source = "github", version = "latest"),
   save = TRUE,
   overwrite = TRUE
 )
@@ -15,7 +16,10 @@ directory_settings(
 \arguments{
 \item{directory_config_file}{\code{character} value of the path to the directory config YAML.}
 
-\item{subdirectories}{\code{character} vector of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}.}
+\item{subdirectories}{named \code{character} list of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}.}
+
+\item{EvergladesWadingBird}{\code{list} with \code{source} and \code{version} elements that are \code{character} values for the source and version of the Everglades Wading Bird to download. Default values retrieve the latest data from github. \cr \cr
+See \code{\link[wader]{download_observations}}.}
 
 \item{save}{\code{logical} indicator controlling if the output should be saved out.}
 

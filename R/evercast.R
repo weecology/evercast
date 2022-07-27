@@ -9,7 +9,7 @@
 #' @keywords package
 #'
 #' @importFrom utils packageDescription sessionInfo
-#' @importFrom wader download_observations
+#' @importFrom wader download_observations load_datafile
 #' @importFrom yaml read_yaml write_yaml
 #'
 NULL

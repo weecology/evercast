@@ -1,0 +1,15 @@
+base:
+  metadata:
+    name: all_total
+    descriptor: classic dataset
+    text: Basic dataset
+  fun: prepare_dataset
+  args:
+    name: base
+    filename: counts_base.csv
+    datafile: Indicators/max_count_all.csv
+    na.strings: ""
+    species:
+      - total 
+    regions:
+      - all 

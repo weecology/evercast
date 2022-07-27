@@ -4,6 +4,10 @@
 #'             
 #' @param main \code{character} value of the name of the main component of the directory tree.
 #'
+#' @param models \code{character} vector of name(s) of model(s) to include.
+#'
+#' @param datasets \code{character} vector of name(s) of wading bird dataset(s) to be created. 
+#'
 #' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
 #'
 #' @param quiet \code{logical} indicator if progress messages should be quieted.
@@ -18,6 +22,8 @@
 #' @export
 #'
 fill_dir <- function (main     = ".",
+                      models   = prefab_models(), 
+                      datasets = prefab_datasets(),
                       settings = directory_settings(), 
                       quiet    = FALSE, 
                       verbose  = FALSE) {
@@ -29,6 +35,14 @@ fill_dir <- function (main     = ".",
                  quiet    = quiet, 
                  verbose  = verbose)
 
+  fill_data(main     = main, 
+            datasets = datasets,
+            models   = models,
+            settings = settings, 
+            quiet    = quiet, 
+            verbose  = verbose)
+            
+
   messageq("\nDirectory filling complete.", quiet = quiet)
 
   invisible()
@@ -37,6 +51,31 @@ fill_dir <- function (main     = ".",
 
 
 
+#' @rdname directory-filling
+#'
+#' @export
+#'
+fill_data <- function (main     = ".",
+                       models   = prefab_models(),
+                       datasets = prefab_datasets(),
+                       settings = directory_settings(), 
+                       quiet    = FALSE,
+                       verbose  = FALSE) {
+
+  messageq(" Writing data files ... ", quiet = quiet)
+
+  write_dataset_controls(main     = main, 
+                         settings = settings, 
+                         datasets = datasets, 
+                         quiet    = FALSE)
+
+
+
+  messageq("  ... data preparing complete.", quiet = quiet)
+
+  invisible()
+
+}
 
 #' @rdname directory-filling
 #'

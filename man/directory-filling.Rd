@@ -3,11 +3,23 @@
 \name{directory filling}
 \alias{directory filling}
 \alias{fill_dir}
+\alias{fill_data}
 \alias{fill_resources}
 \title{Fill an Everglades Forecasting Directory with Basic Components}
 \usage{
 fill_dir(
   main = ".",
+  models = prefab_models(),
+  datasets = prefab_datasets(),
+  settings = directory_settings(),
+  quiet = FALSE,
+  verbose = FALSE
+)
+
+fill_data(
+  main = ".",
+  models = prefab_models(),
+  datasets = prefab_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -22,6 +34,10 @@ fill_resources(
 }
 \arguments{
 \item{main}{\code{character} value of the name of the main component of the directory tree.}
+
+\item{models}{\code{character} vector of name(s) of model(s) to include.}
+
+\item{datasets}{\code{character} vector of name(s) of wading bird dataset(s) to be created.}
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.}
 

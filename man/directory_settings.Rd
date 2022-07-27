@@ -5,7 +5,8 @@
 \title{Create a Directory Settings List}
 \usage{
 directory_settings(
-  directory_config_file = "dir_config.yaml",
+  files = list(directory_config = "dir_config.yaml", dataset_controls =
+    "dataset_controls.yaml"),
   subdirectories = list(forecasts = "forecasts", fits = "fits", models = "models",
     resources = "resources", data = "data"),
   EvergladesWadingBird = list(source = "github", version = "latest"),
@@ -14,7 +15,7 @@ directory_settings(
 )
 }
 \arguments{
-\item{directory_config_file}{\code{character} value of the path to the directory config YAML.}
+\item{files}{named \code{character} list of the file names (with extensions). Default includes \code{directory_config}, \code{dataset_controls}.}
 
 \item{subdirectories}{named \code{character} list of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}.}
 

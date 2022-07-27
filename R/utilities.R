@@ -1,4 +1,169 @@
 
+
+#' @title Determine a File's Extension or Remove the Extension from the File Path
+#'
+#' @description Based on the separating character, \code{file_ext} determines the file extension and \code{path_no_ext} determines the file path without the extension.
+#'
+#' @param path \code{character} value of the file path possibly with an extension.
+#'
+#' @param sep_char \code{character} value of the separator that delineates the extension from the file path. Generally, this will be \code{"."}, but for some API URLs, the extension is actually a query component, so the separator may sometimes need to be \code{"="}.
+#'
+#' @return \code{character} value of the extension (\code{file_ext}) or the path without the extension (\code{path_no_ext}.
+#' 
+#' @examples
+#'  file_ext("home/folders.with.dots/stuff/ok.csv")
+#'  path_no_ext("home/folders.with.dots/stuff/ok.csv")
+#'  file_ext(NMME_urls()[[1]])
+#'  file_ext(NMME_urls()[[1]], "=")
+#'
+#' @export
+#'
+file_ext <- function (path, sep_char = ".") {
+  
+  for_regexpr <- paste0("\\", sep_char, "([[:alnum:]]+)$")
+  pos         <- regexpr(for_regexpr, path)
+
+  ifelse(pos > -1L, substring(path, pos + 1L), "")
+
+}
+
+#' @rdname file_ext
+#'
+#' @export
+#'
+path_no_ext <- function (path, sep_char = ".") {
+  
+  for_sub <- paste0("([^", sep_char, "]+)\\.[[:alnum:]]+$")
+  sub(for_sub, "\\1", path)
+
+}
+
+
+#' @title Update a List's Elements
+#'
+#' @description Update a list with new values for elements
+#'
+#' @param list \code{list} to be updated with \code{...}. 
+#'
+#' @param ... Named elements to update in \code{list}
+#'
+#' @return Updated \code{list}.
+#'
+#' @examples
+#'  orig_list <- list(a = 1, b = 3, c = 4)
+#'  update_list(orig_list)
+#'  update_list(orig_list, a = "a")
+#'  update_list(orig_list, a = 10, b = NULL)
+#'
+#' @export
+#'
+update_list <- function (list = list(),
+                                ...) {
+
+  if (!is.list(list)) {
+
+    stop("`list` must be a list")
+
+  } 
+
+  update_elems <- list(...)
+
+  nupdate_elems <- length(update_elems)
+  norig_elems   <- length(list)
+
+  updated_list <- named_null_list(element_names = names(list))
+
+  if (norig_elems > 0) {
+
+    for (i in 1:norig_elems) {
+
+      if (!is.null(list[[i]])) {
+
+        updated_list[[i]] <- list[[i]]
+
+      }
+
+    }
+
+  }
+
+  if (nupdate_elems > 0) {
+
+    names_update_elems <- names(update_elems)
+
+    for (i in 1:nupdate_elems) {
+
+      if (!is.null(update_elems[[i]])) {
+
+        updated_list[[names_update_elems[i]]] <- update_elems[[i]]
+
+      }
+
+    }
+
+  }
+
+  updated_list
+
+}
+
+#' @title If a Value is NULL, Trigger the Parent Function's Return
+#'
+#' @description If the focal input is \code{NULL}, return \code{value} from the parent function. Should only be used within a function.
+#'
+#' @param x Focal input.
+#'
+#' @param value If \code{x} is \code{NULL}, \code{\link{return}} this input from the parent function. 
+#'
+#' @return If \code{x} is not \code{NULL}, \code{NULL} is returned. If \code{x} is \code{NULL}, the result of \code{\link{return}} with \code{value} as its input evaluated within the parent function's environment is returned.
+#' 
+#' @examples
+#'  ff <- function(x = 1, null_return = "hello"){
+#'    return_if_null(x, null_return)
+#'    x
+#'  }
+#'  ff()
+#'  ff(NULL)
+#'
+#' @export 
+#'
+return_if_null <- function (x, value = NULL) {
+
+  if (is.null(x)) {
+
+    do.call(what  = return, 
+            args  = list(value), 
+            envir = sys.frame(-1))
+
+  } 
+
+}
+
+#' @title Create a Named Empty List
+#'
+#' @description Produces a list with \code{NULL} for each element named according to \code{element_names}.
+#' 
+#' @param element_names \code{character} vector of names for the elements in the list.
+#'
+#' @return \code{list} with names \code{element_names} and values \code{NULL}.
+#'
+#' @examples
+#'  named_null_list(c("a", "b", "c"))
+#'
+#' @export
+#'
+named_null_list <- function (element_names = NULL) {
+
+  return_if_null(element_names)
+
+  nelements  <- length(element_names)
+  out        <- vector("list", nelements)
+  names(out) <- element_names
+
+  out
+
+}
+
 #' @title Optionally generate a message based on a logical input
 #'
 #' @description A wrapper on \code{\link[base]{message}} that, given the input to \code{quiet}, generates the message(s) in \code{...} or not.

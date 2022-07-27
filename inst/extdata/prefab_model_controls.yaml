@@ -1,0 +1,16 @@
+AutoArima:
+  metadata:
+    name: AutoArima
+    descriptor: classic model
+    text: AutoArima (Automatic Auto-Regressive Integrated Moving Average) is a flexible Auto-Regressive Integrated Moving Average (ARIMA) model fit to the data. The model is selected and  fitted using the `auto.arima` and `forecast` functions in the **forecast** package [@Hyndman2013; @Hyndman2017] within the `AutoArima()` function. Generally, ARIMA models are defined according to three model structure parameters -- the number of autoregressive terms (p), the degree of differencing (d), and the order of the moving average (q), and are represented as ARIMA(p, d, q) [@Box1970]. No seasonal models were evaluated. AutoArima is fit flexibly, such that the model parameters can vary from fit to fit.
+  fun: auto.arima
+  args: 
+    "y": quote(abundance)
+  interpolate: 
+    needed: no
+  datasets:
+  - base
+  response: 
+    link: normal
+    type: distribution 
+  time: year

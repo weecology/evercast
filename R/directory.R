@@ -83,7 +83,7 @@ setup_dir <- function (main     = ".",
 #'
 #' @description Most users will not want or need to change the directory folders and file names, but it is helpful to have them be flexible for certain circumstances, and this function gathers them into a list for pipeline functionality.
 #'
-#' @param directory_config_file \code{character} value of the path to the directory config YAML.
+#' @param files named \code{character} list of the file names (with extensions). Default includes \code{directory_config}, \code{dataset_controls}.
 #'
 #' @param subdirectories named \code{character} list of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}. 
 #'
@@ -98,13 +98,19 @@ setup_dir <- function (main     = ".",
 #'
 #' @export
 #'
-directory_settings <- function (directory_config_file = "dir_config.yaml",
-                                subdirectories        = list(forecasts = "forecasts", fits = "fits", models = "models", resources = "resources", data = "data"),
-                                EvergladesWadingBird  = list(source = "github", version = "latest"),
+directory_settings <- function (files                 = list(directory_config = "dir_config.yaml", 
+                                                             dataset_controls = "dataset_controls.yaml"), 
+                                subdirectories        = list(forecasts = "forecasts", 
+                                                             fits      = "fits", 
+                                                             models    = "models", 
+                                                             resources = "resources", 
+                                                             data      = "data"),
+                                EvergladesWadingBird  = list(source  = "github", 
+                                                             version = "latest"),
                                 save                  = TRUE,
                                 overwrite             = TRUE) {
 
-  list(files     = list(directory_config = directory_config_file),
+  list(files     = files,
        subs      = subdirectories,
        resources = list(EvergladesWadingBird = EvergladesWadingBird),
        save      = save, 

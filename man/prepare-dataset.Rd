@@ -2,18 +2,19 @@
 % Please edit documentation in R/prepare_data.R
 \name{prepare dataset}
 \alias{prepare dataset}
-\alias{prepare_dataset}
-\title{Prepare Data Tables for Forecasting}
+\alias{prepare_max_counts}
+\title{Prepare Max Counts Data Tables for Forecasting}
 \usage{
-prepare_dataset(
+prepare_max_counts(
   name = "all_total",
   main = ".",
   settings = directory_settings(),
-  datafile = "Indicators/max_count_all.csv",
-  filename = "counts_all_total.csv",
-  na.strings = "",
-  regions = "all",
   species = "total",
+  datafile = "Indicators/max_count_all_total.csv",
+  filename = "counts_all_total.csv",
+  minyear = 1986,
+  maxyear = this_year(),
+  level = "all",
   save = TRUE,
   overwrite = TRUE,
   quiet = FALSE,
@@ -27,20 +28,13 @@ prepare_dataset(
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}} that should generally not need to be altered.}
 
-\item{datafile}{the path to the datafile within the folder for EvergladesWadingBird data}
-
 \item{filename}{\code{character} value of the file for saving the output.}
 
-\item{na.strings}{a character vector of strings which are to be
-    interpreted as \code{\link{NA}} values.  Blank fields are also
-    considered to be missing values in logical, integer, numeric and
-    complex fields.  Note that the test happens \emph{after} 
-    white space is stripped from the input, so \code{na.strings} 
-    values may need their own white space stripped in advance.}
+\item{minyear}{Earliest year to include}
 
-\item{regions}{\code{character} vector of regions to include.}
+\item{maxyear}{Most recent year to include}
 
-\item{species}{\code{character} vector of species to include.}
+\item{level}{level at which to summarize (colony, subregion, region, all)}
 
 \item{save}{\code{logical} indicator controlling if the output should be saved out.}
 
@@ -54,5 +48,5 @@ prepare_dataset(
 \code{data.frame} for the specified data set.
 }
 \description{
-Workhorse function for creating datasets using existing functions.
+Generate max count annual datasets using existing functions.
 }

@@ -8,8 +8,10 @@
 #'
 #' @keywords package
 #'
+#' @importFrom forecast auto.arima forecast
+#' @importFrom tscount tsglm 
 #' @importFrom utils packageDescription sessionInfo
-#' @importFrom wader download_observations load_datafile
+#' @importFrom wader download_observations load_datafile max_counts
 #' @importFrom yaml read_yaml write_yaml
 #'
 NULL

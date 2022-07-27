@@ -2,12 +2,12 @@
 % Please edit documentation in R/prepare_data.R
 \name{prepare rodents}
 \alias{prepare rodents}
-\alias{prepare_data}
-\title{Prepare Data for the Evercast Repository}
+\alias{prepare_counts}
+\title{Prepare Counts Data for the Evercast Repository}
 \usage{
-prepare_data(
+prepare_counts(
   main = ".",
-  datasets = prefab_datasets(),
+  count_datasets = prefab_count_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -16,7 +16,7 @@ prepare_data(
 \arguments{
 \item{main}{\code{character} value of the name of the main component of the directory tree.}
 
-\item{datasets}{\code{character} vector of name(s) of dataset(s) to include.}
+\item{count_datasets}{\code{character} vector of name(s) of colony count dataset(s) to include.}
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.}
 

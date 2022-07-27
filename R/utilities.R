@@ -1,4 +1,18 @@
 
+#' @title Determine This Year
+#'
+#' @description Based on today.
+#'
+#' @return \code{numeric} value of the year.
+#' 
+#' @examples
+#'  this_year() 
+#'
+#' @export
+#'
+this_year <- function () { 
+  as.numeric(format(Sys.Date(), "%Y"))
+}
 
 #' @title Determine a File's Extension or Remove the Extension from the File Path
 #'

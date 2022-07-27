@@ -1,0 +1,14 @@
+all:
+  metadata:
+    name: all_total
+    descriptor: All species counts, Everglades-wide.
+    text: All species counts, Everglades-wide.
+  fun: prepare_counts
+  args:
+    name: all_total
+    filename: counts_all_total.csv
+    minyear: 1986
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - total

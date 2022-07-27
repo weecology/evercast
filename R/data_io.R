@@ -83,3 +83,61 @@ write_data <- function (x         = NULL,
   invisible(x)
 
 }
+
+
+
+
+#' @title Read in and Format a Data File 
+#'
+#' @description Read in a specified data file.
+#'
+#' @param main \code{character} value of the name of the main component of the directory tree.
+#'  
+#' @param data_name \code{character} representation of the data needed. Current options include \code{"counts"}.
+#'
+#' @param dataset,datasets \code{character} representation of the grouping name(s) used to define the data. \code{dataset} can only be length 1, \code{datasets} is not restricted in length.
+#'
+#' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}} that should generally not need to be altered.
+#'
+#' @return Data requested.
+#' 
+#' @export
+#'
+read_data <- function (main      = ".", 
+                       data_name = NULL, 
+                       dataset   = "all_total", 
+                       datasets  = prefab_count_datasets(), 
+                       settings  = directory_settings()) {
+  
+  return_if_null(data_name)
+
+  data_name <- tolower(data_name)
+
+  if (data_name == "counts") {
+
+    out <- read_counts(main     = main, 
+                       dataset  = dataset, 
+                       settings = settings)
+
+  } else {
+
+    stop("data name `", data_name, "` not recognized")
+
+  }
+
+  out
+}
+
+#' @rdname read_data
+#'
+#' @export
+#'
+read_counts <- function (main     = ".", 
+                         dataset  = "all", 
+                         settings = directory_settings()) {
+
+
+  return_if_null(dataset)
+  read.csv(file.path(main, settings$subs$data, paste0("counts_", tolower(dataset), ".csv"))) 
+
+}

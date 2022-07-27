@@ -10,7 +10,7 @@
 fill_dir(
   main = ".",
   models = prefab_models(),
-  datasets = prefab_datasets(),
+  count_datasets = prefab_count_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -19,7 +19,7 @@ fill_dir(
 fill_data(
   main = ".",
   models = prefab_models(),
-  datasets = prefab_datasets(),
+  count_datasets = prefab_count_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -37,7 +37,7 @@ fill_resources(
 
 \item{models}{\code{character} vector of name(s) of model(s) to include.}
 
-\item{datasets}{\code{character} vector of name(s) of wading bird dataset(s) to be created.}
+\item{count_datasets}{\code{character} vector of name(s) of wading bird colony count dataset(s) to be created.}
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.}
 

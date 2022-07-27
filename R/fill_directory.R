@@ -69,6 +69,11 @@ fill_data <- function (main     = ".",
                          datasets = datasets, 
                          quiet    = FALSE)
 
+  prepare_data(main     = main,
+               settings = settings,
+               datasets = datasets,
+               quiet    = quiet,
+               verbose  = verbose)
 
 
   messageq("  ... data preparing complete.", quiet = quiet)

@@ -1,6 +1,6 @@
 Package: evercast
 Title: Functions Used in Predicting Everglades Wading Birds
-Version: 0.43.0
+Version: 0.1.0
 Authors@R: c(
     person(c("Juniper", "L."), "Simonis",
       email = "juniper.simonis@weecology.org", role = c("aut", "cre"),

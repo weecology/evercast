@@ -40,6 +40,9 @@
     <loc>https://weecology.github.io/evercast/reference/evercast.html</loc>
   </url>
   <url>
+    <loc>https://weecology.github.io/evercast/reference/file_ext.html</loc>
+  </url>
+  <url>
     <loc>https://weecology.github.io/evercast/reference/index.html</loc>
   </url>
   <url>
@@ -47,5 +50,29 @@
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/messageq.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/named_null_list.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prefabricated_datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prepare-dataset.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prepare-rodents.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/read-and-write-rodent-dataset-controls.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/return_if_null.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/update_list.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/write_data.html</loc>
   </url>
 </urlset>

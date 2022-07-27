@@ -55,7 +55,7 @@
     <loc>https://weecology.github.io/evercast/reference/named_null_list.html</loc>
   </url>
   <url>
-    <loc>https://weecology.github.io/evercast/reference/prefabricated_datasets.html</loc>
+    <loc>https://weecology.github.io/evercast/reference/prefabricated_count_datasets.html</loc>
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/prepare-dataset.html</loc>
@@ -64,10 +64,16 @@
     <loc>https://weecology.github.io/evercast/reference/prepare-rodents.html</loc>
   </url>
   <url>
-    <loc>https://weecology.github.io/evercast/reference/read-and-write-rodent-dataset-controls.html</loc>
+    <loc>https://weecology.github.io/evercast/reference/read-and-write-count-dataset-controls.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/read_data.html</loc>
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/return_if_null.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/this_year.html</loc>
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/update_list.html</loc>

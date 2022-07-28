@@ -83,7 +83,7 @@ setup_dir <- function (main     = ".",
 #'
 #' @description Most users will not want or need to change the directory folders and file names, but it is helpful to have them be flexible for certain circumstances, and this function gathers them into a list for pipeline functionality.
 #'
-#' @param files named \code{character} list of the file names (with extensions). Default includes \code{directory_config}, \code{count_dataset_controls}.
+#' @param files named \code{character} list of the file names (with extensions). Default includes \code{directory_config}, \code{count_dataset_controls}, \code{covariate_dataset_controls}.
 #'
 #' @param subdirectories named \code{character} list of the subdirectory names. Default includes \code{resources}, \code{data}, \code{models}, \code{fits}, and \code{forecasts}. 
 #'
@@ -98,8 +98,9 @@ setup_dir <- function (main     = ".",
 #'
 #' @export
 #'
-directory_settings <- function (files                 = list(directory_config       = "dir_config.yaml", 
-                                                             count_dataset_controls = "count_dataset_controls.yaml"), 
+directory_settings <- function (files                 = list(directory_config           = "dir_config.yaml", 
+                                                             count_dataset_controls     = "count_dataset_controls.yaml", 
+                                                             covariate_dataset_controls = "covariate_dataset_controls.yaml"), 
                                 subdirectories        = list(forecasts = "forecasts", 
                                                              fits      = "fits", 
                                                              models    = "models", 

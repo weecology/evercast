@@ -11,6 +11,7 @@ fill_dir(
   main = ".",
   models = prefab_models(),
   count_datasets = prefab_count_datasets(),
+  covariate_datasets = prefab_covariate_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -20,6 +21,7 @@ fill_data(
   main = ".",
   models = prefab_models(),
   count_datasets = prefab_count_datasets(),
+  covariate_datasets = prefab_covariate_datasets(),
   settings = directory_settings(),
   quiet = FALSE,
   verbose = FALSE
@@ -38,6 +40,8 @@ fill_resources(
 \item{models}{\code{character} vector of name(s) of model(s) to include.}
 
 \item{count_datasets}{\code{character} vector of name(s) of wading bird colony count dataset(s) to be created.}
+
+\item{covariate_datasets}{\code{character} vector of name(s) of covariate dataset(s) to be created.}
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.}
 

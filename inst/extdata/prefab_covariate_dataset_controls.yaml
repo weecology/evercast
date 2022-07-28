@@ -1,14 +1,13 @@
-all:
+all_water:
   metadata:
-    name: all_total
-    descriptor: All species counts, Everglades-wide.
-    text: All species counts, Everglades-wide.
-  fun: prepare_counts
+    name: all_water
+    descriptor: Everglades-wide water level covariates.
+    text: Everglades-wide water level covariates.
+  fun: prepare_covariate_dataset
   args:
-    name: all_total
-    filename: counts_all_total.csv
+    name: all_water
+    filename: all_water.csv
+    datafile: "Water/eden_covariates.csv"
     minyear: 1986
     maxyear: !expr this_year()
-    level: all 
-    species:
-      - total
+    region: all 

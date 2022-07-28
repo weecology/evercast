@@ -1,8 +1,8 @@
-all:
+all_total:
   metadata:
     name: all_total
-    descriptor: All species counts, Everglades-wide.
-    text: All species counts, Everglades-wide.
+    descriptor: Total species counts, Everglades-wide.
+    text: Total species counts, Everglades-wide.
   fun: prepare_max_counts
   args:
     name: all_total

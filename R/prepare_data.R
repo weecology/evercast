@@ -6,7 +6,7 @@
 #'
 #' @param main \code{character} value of the name of the main component of the directory tree. 
 #'
-#' @param count_datasets \code{character} vector of name(s) of rodent dataset(s) to include.
+#' @param count_datasets \code{character} vector of name(s) of wading bird count dataset(s) to include.
 #'
 #' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
 #'
@@ -135,7 +135,7 @@ prefab_count_dataset_controls <- function ( ) {
 #'
 #' @return \code{data.frame} for the specified data set.
 #'
-#' @name prepare dataset
+#' @name prepare max count dataset
 #'
 #' @export
 #'
@@ -188,7 +188,7 @@ prepare_max_counts <- function (name        = "all_total",
 
 #' @title Prepare Counts Data for the Evercast Repository
 #'
-#' @description Create specified \code{datasets} using their associated function and arguments.
+#' @description Create specified \code{count_datasets} using their associated function and arguments.
 #'
 #' @param quiet \code{logical} indicator controlling if messages are printed.
 #'
@@ -202,7 +202,7 @@ prepare_max_counts <- function (name        = "all_total",
 #'
 #' @return \code{list} of prepared \code{datasets}.
 #'  
-#' @name prepare rodents
+#' @name prepare counts
 #'
 #' @export
 #'
@@ -212,7 +212,7 @@ prepare_counts  <- function (main           = ".",
                              quiet          = FALSE,
                              verbose        = FALSE) {
 
-  return_if_null(datasets)
+  return_if_null(count_datasets)
 
   count_dataset_controls_list <- count_dataset_controls(main           = main, 
                                                         settings       = settings, 
@@ -222,7 +222,7 @@ prepare_counts  <- function (main           = ".",
 
   out <- named_null_list(element_names = count_datasets)
 
-  for (i in 1:length(dataset_controls_list)) {
+  for (i in 1:length(count_dataset_controls_list)) {
 
     out[[i]] <- do.call(what = count_dataset_controls_list[[i]]$fun, 
                         args = update_list(list      = count_dataset_controls_list[[i]]$args, 
@@ -236,4 +236,251 @@ prepare_counts  <- function (main           = ".",
   invisible(out)
 
 }
+
+
+
+#' @title Prepare Covariate Data for the Evercast Repository
+#'
+#' @description Create specified \code{covariate_datasets} using their associated function and arguments.
+#'
+#' @param quiet \code{logical} indicator controlling if messages are printed.
+#'
+#' @param verbose \code{logical} indicator of whether or not to print out all of the information or not (and thus just the tidy messages). 
+#'
+#' @param main \code{character} value of the name of the main component of the directory tree. 
+#'
+#' @param covariate_datasets \code{character} vector of name(s) of covariate dataset(s) to include.
+#'
+#' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
+#'
+#' @return \code{list} of prepared \code{datasets}.
+#'  
+#' @name prepare covariates
+#'
+#' @export
+#'
+prepare_covariates  <- function (main               = ".",
+                                 covariate_datasets = prefab_covariate_datasets(),
+                                 settings           = directory_settings(), 
+                                 quiet              = FALSE,
+                                 verbose            = FALSE) {
+
+  return_if_null(covariate_datasets)
+
+  covariate_dataset_controls_list <- covariate_dataset_controls(main               = main, 
+                                                                settings           = settings, 
+                                                                covariate_datasets = covariate_datasets)
+
+  messageq("  - covariates", quiet = quiet)
+
+  out <- named_null_list(element_names = covariate_datasets)
+
+  for (i in 1:length(covariate_dataset_controls_list)) {
+
+    out[[i]] <- do.call(what = covariate_dataset_controls_list[[i]]$fun, 
+                        args = update_list(list      = covariate_dataset_controls_list[[i]]$args, 
+                                           main      = main, 
+                                           settings  = settings, 
+                                           quiet     = quiet, 
+                                           verbose   = verbose))
+  
+  }
+
+  invisible(out)
+
+}
+
+
+
+
+#' @title Prepare Covariate Data Tables for Forecasting
+#'
+#' @description Generate covariate datasets using existing functions. 
+#'
+#' @param name \code{character} name of the data set.
+#'
+#' @param main \code{character} value of the name of the main component of the directory tree.
+#'
+#' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}} that should generally not need to be altered.
+#'
+#' @param verbose \code{logical} indicator if detailed messages should be shown.
+#'
+#' @param quiet \code{logical} indicator if progress messages should be quieted.
+#'
+#' @param overwrite \code{logical} indicator of whether or not the existing files should be updated (most users should leave as \code{TRUE}).
+#'
+#' @param save \code{logical} indicator controlling if the output should be saved out.
+#'
+#' @param filename \code{character} value of the file for saving the output.
+#'
+#' @param regions \code{character} vector of the region(s) to include.
+#'
+#' @inheritParams wader::max_counts
+#'
+#' @inheritParams wader::load_datafile
+#'
+#' @return \code{data.frame} for the specified data set.
+#'
+#' @name prepare covariate dataset
+#'
+#' @export
+#'
+prepare_covariate_dataset <- function (name        = "all_total",
+                                       main        = ".",
+                                       settings    = directory_settings(),
+                                       datafile    = "Water/eden_covariates.csv",
+                                       filename    = "counts_all_total.csv",
+                                       minyear     = 1986,
+                                       maxyear     = this_year(),
+                                       na.strings  = "",
+                                       regions     = "all",
+                                       save        = TRUE,
+                                       overwrite   = TRUE,
+                                       quiet       = FALSE,
+                                       verbose     = FALSE) {
+
+
+  return_if_null(name)
+
+  messageq("    - ", name, quiet = quiet)
+
+
+  out <- load_datafile(datafile   = datafile,
+                       na.strings = na.strings,
+                       path       = file.path(main, settings$subs$resources))
+
+  years <- minyear:maxyear
+  out   <- out[out$year %in% years & out$region %in% regions, ]
+
+  write_data(x         = out, 
+             main      = main, 
+             data_sub  = settings$subs$data,
+             save      = save, 
+             filename  = filename, 
+             overwrite = overwrite, 
+             quiet     = !verbose)
+
+  out
+
+}
+
+
+
+
+
+
+
+#' @title Read and Write Dataset Covariate Control Lists
+#'
+#' @description Input/Output functions for covariate dataset control lists.
+#'
+#' @param quiet \code{logical} indicator controlling if messages are printed.
+#'
+#' @param main \code{character} value of the name of the main component of the directory tree. 
+#'
+#' @param covariate_datasets \code{character} vector of name(s) of covariate dataset(s) to be created. 
+#'
+#' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
+#'
+#' @param new_dataset_controls \code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.
+#'
+#' @return \code{list} of \code{datasets}' control \code{list}s, \code{\link[base]{invisible}}-ly for \code{write_dataset_controls}.
+#'  
+#' @name read and write covariate dataset controls
+#'
+#' @export
+#'
+read_covariate_dataset_controls <- function (main     = ".",
+                                             settings = directory_settings()) {
+
+  read_yaml(file.path(main, settings$subs$data, settings$files$covariate_dataset_controls), eval.expr = TRUE)
+
+}
+
+#' @rdname read-and-write-covariate-dataset-controls
+#'
+#' @export
+#'
+covariate_dataset_controls <- function (main               = ".",
+                                        covariate_datasets = prefab_covariate_datasets(),
+                                        settings           = directory_settings()) {
+
+  read_covariate_dataset_controls(main     = main,
+                                  settings = settings)[covariate_datasets]
+
+}
+
+#' @rdname read-and-write-covariate-dataset-controls
+#'
+#' @export
+#'
+write_covariate_dataset_controls <- function (main                           = ".",
+                                              new_covariate_dataset_controls = NULL,
+                                              covariate_datasets             = prefab_covariate_datasets(),
+                                              settings                       = directory_settings(),
+                                              quiet                          = FALSE) {
+
+  covariate_dataset_controls <- prefab_covariate_dataset_controls()
+  ncovariate_datasets        <- length(covariate_dataset_controls)
+  nnew_covariate_datasets    <- length(new_covariate_dataset_controls)
+
+  if (nnew_covariate_datasets > 0) {
+
+    for (i in 1:nnew_covariate_datasets) {
+
+      covariate_dataset_controls <- update_list(covariate_dataset_controls, 
+                                                x = new_covariate_dataset_controls[[i]])
+
+      names(covariate_dataset_controls)[ncovariate_datasets + i] <- names(new_covariate_dataset_controls)[i]
+
+    }
+
+  }
+
+  write_yaml(x    = covariate_dataset_controls,
+             file = file.path(main, settings$subs$data, settings$files$covariate_dataset_controls))
+
+  invisible(covariate_dataset_controls)
+
+}
+
+#' @title Provide the Names or Controls for the Prefab Covariate Datasets
+#'
+#' @description Create a \code{character} vector of the names of the pre-fabricated (prefab) covariate datasets or a \code{list} of their controls.
+#'
+#' @return \code{prefab_covariate_datasets}: \code{character} vector of covariatedataset names. \cr
+#'         \code{prefab_covariate_dataset_controls}: \code{list} vector of covariate dataset controls. \cr
+#'
+#' @examples
+#'  prefab_covariate_datasets()
+#'  prefab_covariate_dataset_controls()
+#'
+#' @name prefabricated_covariate_datasets
+#'
+NULL
+
+#' @rdname prefabricated_covariate_datasets
+#'
+#' @export
+#'
+prefab_covariate_datasets <- function( ) {
+
+  names(prefab_covariate_dataset_controls())
+
+}
+
+
+#' @rdname prefabricated_covariate_datasets
+#'
+#' @export
+#'
+prefab_covariate_dataset_controls <- function ( ) {
+
+  prefab_controls_file <- system.file("extdata", "prefab_covariate_dataset_controls.yaml", package = "evercast")
+
+  read_yaml(prefab_controls_file, eval.expr = TRUE)
+
+}
+
+
 

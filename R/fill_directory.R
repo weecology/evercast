@@ -8,6 +8,8 @@
 #'
 #' @param count_datasets \code{character} vector of name(s) of wading bird colony count dataset(s) to be created. 
 #'
+#' @param covariate_datasets \code{character} vector of name(s) of covariate dataset(s) to be created. 
+#'
 #' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
 #'
 #' @param quiet \code{logical} indicator if progress messages should be quieted.
@@ -21,12 +23,13 @@
 #'
 #' @export
 #'
-fill_dir <- function (main           = ".",
-                      models         = prefab_models(), 
-                      count_datasets = prefab_count_datasets(),
-                      settings       = directory_settings(), 
-                      quiet          = FALSE, 
-                      verbose        = FALSE) {
+fill_dir <- function (main               = ".",
+                      models             = prefab_models(), 
+                      count_datasets     = prefab_count_datasets(),
+                      covariate_datasets = prefab_covariate_datasets(),
+                      settings           = directory_settings(), 
+                      quiet              = FALSE, 
+                      verbose            = FALSE) {
 
   messageq("Filling directory with content: \n", quiet = quiet)
 
@@ -35,12 +38,13 @@ fill_dir <- function (main           = ".",
                  quiet    = quiet, 
                  verbose  = verbose)
 
-  fill_data(main           = main, 
-            count_datasets = count_datasets,
-            models         = models,
-            settings       = settings, 
-            quiet          = quiet, 
-            verbose        = verbose)
+  fill_data(main               = main, 
+            count_datasets     = count_datasets,
+            covariate_datasets = covariate_datasets,
+            models             = models,
+            settings           = settings, 
+            quiet              = quiet, 
+            verbose            = verbose)
             
 
   messageq("\nDirectory filling complete.", quiet = quiet)
@@ -55,12 +59,13 @@ fill_dir <- function (main           = ".",
 #'
 #' @export
 #'
-fill_data <- function (main           = ".",
-                       models         = prefab_models(),
-                       count_datasets = prefab_count_datasets(),
-                       settings       = directory_settings(), 
-                       quiet          = FALSE,
-                       verbose        = FALSE) {
+fill_data <- function (main               = ".",
+                       models             = prefab_models(),
+                       count_datasets     = prefab_count_datasets(),
+                       covariate_datasets = prefab_covariate_datasets(),
+                       settings           = directory_settings(), 
+                       quiet              = FALSE,
+                       verbose            = FALSE) {
 
   messageq(" Writing data files ... ", quiet = quiet)
 
@@ -74,6 +79,17 @@ fill_data <- function (main           = ".",
                  count_datasets = count_datasets,
                  quiet          = quiet,
                  verbose        = verbose)
+
+  write_covariate_dataset_controls(main               = main, 
+                                   settings           = settings, 
+                                   covariate_datasets = covariate_datasets, 
+                                   quiet              = quiet)
+
+  prepare_covariates(main               = main,
+                     settings           = settings,
+                     covariate_datasets = covariate_datasets,
+                     quiet              = quiet,
+                     verbose            = verbose)
 
 
   messageq("  ... data preparing complete.", quiet = quiet)

@@ -71,7 +71,13 @@
 <span>  settings <span class="op">=</span> <span class="fu"><a href="directory_settings.html">directory_settings</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">read_counts</span><span class="op">(</span>main <span class="op">=</span> <span class="st">"."</span>, dataset <span class="op">=</span> <span class="st">"all"</span>, settings <span class="op">=</span> <span class="fu"><a href="directory_settings.html">directory_settings</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">read_counts</span><span class="op">(</span>main <span class="op">=</span> <span class="st">"."</span>, dataset <span class="op">=</span> <span class="st">"all_total"</span>, settings <span class="op">=</span> <span class="fu"><a href="directory_settings.html">directory_settings</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">read_covariates</span><span class="op">(</span></span>
+<span>  main <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  dataset <span class="op">=</span> <span class="st">"all_water"</span>,</span>
+<span>  settings <span class="op">=</span> <span class="fu"><a href="directory_settings.html">directory_settings</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,7 +87,7 @@
 
 
 <dt>data_name</dt>
-<dd><p><code>character</code> representation of the data needed. Current options include <code>"counts"</code>.</p></dd>
+<dd><p><code>character</code> representation of the data needed. Current options include <code>"counts"</code> and <code>"covariates"</code>.</p></dd>
 
 
 <dt>dataset, datasets</dt>

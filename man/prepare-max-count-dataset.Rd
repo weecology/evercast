@@ -28,6 +28,10 @@ prepare_max_counts(
 
 \item{settings}{\code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}} that should generally not need to be altered.}
 
+\item{species}{\code{character} vector of species to include.}
+
+\item{datafile}{the path to the datafile within the folder for EvergladesWadingBird data}
+
 \item{filename}{\code{character} value of the file for saving the output.}
 
 \item{minyear}{Earliest year to include}

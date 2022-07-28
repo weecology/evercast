@@ -10,7 +10,7 @@
 #'
 #' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
 #'
-#' @param new_dataset_controls \code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.
+#' @param new_count_dataset_controls \code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.
 #'
 #' @return \code{list} of \code{datasets}' control \code{list}s, \code{\link[base]{invisible}}-ly for \code{write_dataset_controls}.
 #'  
@@ -131,7 +131,11 @@ prefab_count_dataset_controls <- function ( ) {
 #'
 #' @param filename \code{character} value of the file for saving the output.
 #'
+#' @param species \code{character} vector of species to include.
+#'
 #' @inheritParams wader::max_counts
+#'
+#' @inheritParams wader::load_datafile
 #'
 #' @return \code{data.frame} for the specified data set.
 #'
@@ -383,7 +387,7 @@ prepare_covariate_dataset <- function (name        = "all_total",
 #'
 #' @param settings \code{list} of controls for the directory, with defaults set in \code{\link{directory_settings}}.
 #'
-#' @param new_dataset_controls \code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.
+#' @param new_covariate_dataset_controls \code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.
 #'
 #' @return \code{list} of \code{datasets}' control \code{list}s, \code{\link[base]{invisible}}-ly for \code{write_dataset_controls}.
 #'  

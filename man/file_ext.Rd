@@ -23,7 +23,5 @@ Based on the separating character, \code{file_ext} determines the file extension
 \examples{
  file_ext("home/folders.with.dots/stuff/ok.csv")
  path_no_ext("home/folders.with.dots/stuff/ok.csv")
- file_ext(NMME_urls()[[1]])
- file_ext(NMME_urls()[[1]], "=")
 
 }

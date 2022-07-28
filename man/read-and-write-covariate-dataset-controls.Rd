@@ -30,9 +30,9 @@ write_covariate_dataset_controls(
 
 \item{covariate_datasets}{\code{character} vector of name(s) of covariate dataset(s) to be created.}
 
-\item{quiet}{\code{logical} indicator controlling if messages are printed.}
+\item{new_covariate_dataset_controls}{\code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.}
 
-\item{new_dataset_controls}{\code{list} of controls for any new datasets (not in the prefab datasets) listed in \code{datasets} that are to be added to the control list and file.}
+\item{quiet}{\code{logical} indicator controlling if messages are printed.}
 }
 \value{
 \code{list} of \code{datasets}' control \code{list}s, \code{\link[base]{invisible}}-ly for \code{write_dataset_controls}.

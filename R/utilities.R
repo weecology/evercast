@@ -27,8 +27,6 @@ this_year <- function () {
 #' @examples
 #'  file_ext("home/folders.with.dots/stuff/ok.csv")
 #'  path_no_ext("home/folders.with.dots/stuff/ok.csv")
-#'  file_ext(NMME_urls()[[1]])
-#'  file_ext(NMME_urls()[[1]], "=")
 #'
 #' @export
 #'
@@ -145,7 +143,7 @@ return_if_null <- function (x, value = NULL) {
 
   if (is.null(x)) {
 
-    do.call(what  = return, 
+    do.call(what  = "return", 
             args  = list(value), 
             envir = sys.frame(-1))
 

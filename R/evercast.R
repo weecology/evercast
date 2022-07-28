@@ -10,7 +10,7 @@
 #'
 #' @importFrom forecast auto.arima forecast
 #' @importFrom tscount tsglm 
-#' @importFrom utils packageDescription sessionInfo
+#' @importFrom utils packageDescription read.csv sessionInfo write.csv
 #' @importFrom wader download_observations load_datafile max_counts
 #' @importFrom yaml read_yaml write_yaml
 #'

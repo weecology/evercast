@@ -345,9 +345,10 @@ prepare_covariate_dataset <- function (name        = "all_total",
   messageq("    - ", name, quiet = quiet)
 
 
-  out <- load_datafile(datafile   = datafile,
-                       na.strings = na.strings,
-                       path       = file.path(main, settings$subs$resources))
+  out <- load_datafile(datafile            = datafile,
+                       na.strings          = na.strings,
+                       download_if_missing = FALSE,
+                       path                = file.path(main, settings$subs$resources))
 
   years <- minyear:maxyear
   out   <- out[out$year %in% years & out$region %in% regions, ]

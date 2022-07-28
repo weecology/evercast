@@ -6,7 +6,7 @@ all_water:
   fun: prepare_covariate_dataset
   args:
     name: all_water
-    filename: all_water.csv
+    filename: covariates_all_water.csv
     datafile: "Water/eden_covariates.csv"
     minyear: 1986
     maxyear: !expr this_year()

@@ -93,7 +93,7 @@ write_data <- function (x         = NULL,
 #'
 #' @param main \code{character} value of the name of the main component of the directory tree.
 #'  
-#' @param data_name \code{character} representation of the data needed. Current options include \code{"counts"}.
+#' @param data_name \code{character} representation of the data needed. Current options include \code{"counts"} and \code{"covariates"}.
 #'
 #' @param dataset,datasets \code{character} representation of the grouping name(s) used to define the data. \code{dataset} can only be length 1, \code{datasets} is not restricted in length.
 #'
@@ -119,6 +119,12 @@ read_data <- function (main      = ".",
                        dataset  = dataset, 
                        settings = settings)
 
+  } else if (data_name == "covariates") {
+
+    out <- read_covariates(main     = main, 
+                           dataset  = dataset, 
+                           settings = settings)
+
   } else {
 
     stop("data name `", data_name, "` not recognized")
@@ -133,11 +139,25 @@ read_data <- function (main      = ".",
 #' @export
 #'
 read_counts <- function (main     = ".", 
-                         dataset  = "all", 
+                         dataset  = "all_total", 
                          settings = directory_settings()) {
 
 
   return_if_null(dataset)
   read.csv(file.path(main, settings$subs$data, paste0("counts_", tolower(dataset), ".csv"))) 
+
+}
+
+#' @rdname read_data
+#'
+#' @export
+#'
+read_covariates <- function (main     = ".", 
+                             dataset  = "all_water", 
+                             settings = directory_settings()) {
+
+
+  return_if_null(dataset)
+  read.csv(file.path(main, settings$subs$data, paste0("covariates_", tolower(dataset), ".csv"))) 
 
 }

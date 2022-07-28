@@ -3,6 +3,7 @@
 \name{read_data}
 \alias{read_data}
 \alias{read_counts}
+\alias{read_covariates}
 \title{Read in and Format a Data File}
 \usage{
 read_data(
@@ -13,12 +14,18 @@ read_data(
   settings = directory_settings()
 )
 
-read_counts(main = ".", dataset = "all", settings = directory_settings())
+read_counts(main = ".", dataset = "all_total", settings = directory_settings())
+
+read_covariates(
+  main = ".",
+  dataset = "all_water",
+  settings = directory_settings()
+)
 }
 \arguments{
 \item{main}{\code{character} value of the name of the main component of the directory tree.}
 
-\item{data_name}{\code{character} representation of the data needed. Current options include \code{"counts"}.}
+\item{data_name}{\code{character} representation of the data needed. Current options include \code{"counts"} and \code{"covariates"}.}
 
 \item{dataset, datasets}{\code{character} representation of the grouping name(s) used to define the data. \code{dataset} can only be length 1, \code{datasets} is not restricted in length.}
 

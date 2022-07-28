@@ -58,13 +58,25 @@
     <loc>https://weecology.github.io/evercast/reference/prefabricated_count_datasets.html</loc>
   </url>
   <url>
-    <loc>https://weecology.github.io/evercast/reference/prepare-dataset.html</loc>
+    <loc>https://weecology.github.io/evercast/reference/prefabricated_covariate_datasets.html</loc>
   </url>
   <url>
-    <loc>https://weecology.github.io/evercast/reference/prepare-rodents.html</loc>
+    <loc>https://weecology.github.io/evercast/reference/prepare-counts.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prepare-covariate-dataset.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prepare-covariates.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/prepare-max-count-dataset.html</loc>
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/read-and-write-count-dataset-controls.html</loc>
+  </url>
+  <url>
+    <loc>https://weecology.github.io/evercast/reference/read-and-write-covariate-dataset-controls.html</loc>
   </url>
   <url>
     <loc>https://weecology.github.io/evercast/reference/read_data.html</loc>

@@ -12,3 +12,60 @@ all_total:
     level: all 
     species:
       - total
+all_WOST:
+  metadata:
+    name: all_WOST
+    descriptor: Total species counts, Everglades-wide.
+    text: Total species counts, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_WOST
+    filename: counts_all_WOST.csv
+    minyear: 1986
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - WOST
+all_WOSTWHIB:
+  metadata:
+    name: all_WOSTWHIB
+    descriptor: Total species counts, Everglades-wide.
+    text: Total species counts, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_WOSTWHIB
+    filename: counts_all_WOSTWHIB.csv
+    minyear: 1986
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - WOST
+      - WHIB
+all_WHIB:
+  metadata:
+    name: all_WHIB
+    descriptor: Total species counts, Everglades-wide.
+    text: Total species counts, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_WHIB
+    filename: counts_all_WHIB.csv
+    minyear: 1986
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - WHIB
+all_GREG:
+  metadata:
+    name: all_GREG
+    descriptor: Total species counts, Everglades-wide.
+    text: Total species counts, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_GREG
+    filename: counts_all_GREG.csv
+    minyear: 1986
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - GREG

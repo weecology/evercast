@@ -163,12 +163,20 @@ prepare_max_counts <- function (name        = "all_total",
   messageq("    - ", name, quiet = quiet)
 
 
-  out <- max_counts(minyear = minyear,
-                    maxyear = maxyear,
-                    level   = level,
-                    path    = file.path(main, settings$subs$resources))
+  out1 <- max_counts(minyear = minyear,
+                     maxyear = maxyear,
+                     level   = level,
+                     path    = file.path(main, settings$subs$resources))
 
-  out <- out[out$species %in% species, ]
+  out1 <- out1[tolower(out1$species) %in% tolower(species), ]
+
+  out  <- data.frame(year = minyear:min(c(maxyear, max(out1$year))), species = paste(species, collapse = "_"), count = 0)
+
+  for (i in 1:nrow(out)) {
+
+    out[i, "count"] <- sum(out1$count[out1$year == out$year[i]])
+  }
+
 
   write_data(x         = out, 
              main      = main, 

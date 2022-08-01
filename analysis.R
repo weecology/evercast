@@ -101,7 +101,7 @@ points(c(last_year, forecast_years), c(last_fitted, forecast_w$interval[ , "lowe
 
 
 
-points(counts_g$year, fit_g$fitted.values, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
+points(counts_g$year, counts_g$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
 
 points(counts_g$year, fit_g$fitted.values, type = "l", lwd = 3, col = grey(0.6))
 
@@ -181,7 +181,7 @@ points(c(last_year, forecast_years), c(last_fitted, forecast_w_nb$interval[ , "l
 
 
 
-points(counts_g$year, fit_g$fitted.values, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
+points(counts_g$year, counts_g$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
 
 points(counts_g$year, fit_g$fitted.values, type = "l", lwd = 3, col = grey(0.6))
 

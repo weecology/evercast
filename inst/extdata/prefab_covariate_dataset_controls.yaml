@@ -11,3 +11,16 @@ all_water:
     minyear: 1986
     maxyear: !expr this_year()
     region: all 
+WCA_3A_water:
+  metadata:
+    name: WCA_3a_water
+    descriptor: WCA-3A water level covariates.
+    text: Water level covariates for WCA 3A.
+  fun: prepare_covariate_dataset
+  args:
+    name: WCA_3A_water
+    filename: covariates_WCA_3A_water.csv
+    datafile: "Water/eden_covariates.csv"
+    minyear: 1986
+    maxyear: !expr this_year()
+    region: 3A

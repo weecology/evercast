@@ -1,15 +1,24 @@
+# currently won't work to fully establish the datasets, given that 3A covariates and counts are not available at that level specifically
+# the dataset controls are written for them, with only partial implementation completed. not sure what form the data will come so holding.
+
 devtools::document()
 
 main <- "~/testing"
-setup_dir(main = main)
+#setup_dir(main = main)
 
-counts_g <- read_counts(main, "all_GREG")
-counts_w <- read_counts(main, "all_WOSTWHIB")
+fill_data(main)
+
+counts_greg <- read_counts(main, "all_GREG")
+counts_wost <- read_counts(main, "all_WOST")
+counts_whib <- read_counts(main, "all_WHIB")
+counts_rosp <- read_counts(main, "all_ROSP")
 
 covariates <- read_covariates(main)
 
-head(counts_g)
-head(counts_w)
+head(counts_greg)
+head(counts_wost)
+head(counts_whib)
+head(counts_rosp)
 head(covariates)
 
 
@@ -25,8 +34,7 @@ plot(init_depth, breed_season_depth)
 plot(covariates$year, breed_season_depth, type = "l")
 
 
-covariates$year
-
+breed_season_depth <- breed_season_depth[!(covariates$year %in% forecast_years)]
 covariate_forecast_years <- forecast_years[!(forecast_years %in% covariates$year)]
 ncovariate_forecast_years <- length(covariate_forecast_years)
 
@@ -35,45 +43,140 @@ forecast_breed_season_depth <- forecast(forecast_model_breed_season_depth, ncova
 
 future_breed_season_depth <- c(covariates$breed_season_depth[covariates$year %in% forecast_years] , forecast_breed_season_depth$mean)
 
-nmissing_early_years <- min(covariates$year) - min(counts_g$year)
 
-breed_season_depth <- c(rep(mean(breed_season_depth[1:5]), nmissing_early_years), breed_season_depth[covariates$year %in% counts_g$year])
 
 # Poisson
 
 fun  <- tsglm
-args_g <- list(ts    = counts_g$count,
-               model = list(past_obs  = 1,
-                            past_mean = NULL),
-               xreg  = breed_season_depth,
-               link  = "log",
-               distr = "poisson")
-fit_g <- do.call(what = fun, 
-                 args = args_g)
-forecast_g <- predict(object  = fit_g, 
-                      n.ahead = nforecast_years, 
-                      newxreg = future_breed_season_depth,
-                      level   = 0.95)
+args_greg_p <- list(ts    = counts_greg$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "poisson")
+fit_greg_p <- do.call(what = fun, 
+                      args = args_greg_p)
+forecast_greg_p <- predict(object  = fit_greg_p, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
 
 
 
-args_w <- list(ts    = counts_w$count,
-               model = list(past_obs  = 1,
-                            past_mean = NULL),
-               xreg  = breed_season_depth,
-               link  = "log",
-               distr = "poisson")
-fit_w <- do.call(what = fun, 
-                 args = args_w)
-forecast_w <- predict(object  = fit_w, 
-                      n.ahead = nforecast_years, 
-                      newxreg = future_breed_season_depth,
-                      level   = 0.95)
+fun  <- tsglm
+args_whib_p <- list(ts    = counts_whib$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "poisson")
+fit_whib_p <- do.call(what = fun, 
+                      args = args_whib_p)
+forecast_whib_p <- predict(object  = fit_whib_p, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
 
 
+fun  <- tsglm
+args_wost_p <- list(ts    = counts_wost$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "poisson")
+fit_wost_p <- do.call(what = fun, 
+                      args = args_wost_p)
+forecast_wost_p <- predict(object  = fit_wost_p, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+fun  <- tsglm
+args_rosp_p <- list(ts    = counts_rosp$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "poisson")
+fit_rosp_p <- do.call(what = fun, 
+                      args = args_rosp_p)
+forecast_rosp_p <- predict(object  = fit_rosp_p, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+
+
+# nbinom
+
+fun  <- tsglm
+args_greg_nb <- list(ts    = counts_greg$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "nbinom")
+fit_greg_nb <- do.call(what = fun, 
+                      args = args_greg_nb)
+forecast_greg_nb <- predict(object  = fit_greg_nb, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+
+fun  <- tsglm
+args_whib_nb <- list(ts    = counts_whib$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "nbinom")
+fit_whib_nb <- do.call(what = fun, 
+                      args = args_whib_nb)
+forecast_whib_nb <- predict(object  = fit_whib_nb, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+fun  <- tsglm
+args_wost_nb <- list(ts    = counts_wost$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "nbinom")
+fit_wost_nb <- do.call(what = fun, 
+                      args = args_wost_nb)
+forecast_wost_nb <- predict(object  = fit_wost_nb, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+fun  <- tsglm
+args_rosp_nb <- list(ts    = counts_rosp$count,
+                    model = list(past_obs  = 1,
+                                 past_mean = NULL),
+                    xreg  = breed_season_depth,
+                    link  = "log",
+                    distr = "nbinom")
+fit_rosp_nb <- do.call(what = fun, 
+                      args = args_rosp_nb)
+forecast_rosp_nb <- predict(object  = fit_rosp_nb, 
+                           n.ahead = nforecast_years, 
+                           newxreg = future_breed_season_depth,
+                           level   = 0.95)
+
+
+#### Figures ####
 
 par(mar = c(3, 5, 3, 1))
-plot(counts_w$year, counts_w$count,
+plot(counts_whib$year, counts_whib$count,
      cex = 1.25, lwd = 2,
      ylim = c(0, 100000),
      xlim = c(1985, 2027),
@@ -89,77 +192,74 @@ axis(2, at = seq(0, 100000, 5000), labels = FALSE, las = 1, cex.axis = 1.25, tck
 axis(2, at = seq(0, 100000, 10000), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.02)
 mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-points(counts_w$year, fit_w$fitted.values, type = "l", lwd = 3)
+points(counts_whib$year, fit_whib_p$fitted.values, type = "l", lwd = 3)
 
-last_year   <- counts_w$year[nrow(counts_w)]
-last_count  <- counts_w$count[nrow(counts_w)]
-last_fitted <- fit_w$fitted.values[nrow(counts_w)]
+last_year   <- counts_whib$year[nrow(counts_whib)]
+last_count  <- counts_whib$count[nrow(counts_whib)]
+last_fitted <- fit_whib_p$fitted.values[nrow(counts_whib)]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_w$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_w$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_w$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
-
-
-
-points(counts_g$year, counts_g$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
-
-points(counts_g$year, fit_g$fitted.values, type = "l", lwd = 3, col = grey(0.6))
-
-last_year   <- counts_g$year[nrow(counts_g)]
-last_count  <- counts_g$count[nrow(counts_g)]
-last_fitted <- fit_g$fitted.values[nrow(counts_g)]
-
-points(c(last_year, forecast_years), c(last_fitted, forecast_g$pred), type = "l", lty = 2, lwd = 2, col = grey(0.6))
-points(c(last_year, forecast_years), c(last_fitted, forecast_g$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.6))
-points(c(last_year, forecast_years), c(last_fitted, forecast_g$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.6))
-
-
-text(rep(1986, 2), c(95000, 90000), c("WOST & WHIB", "GREG"), cex = 1.125, font = 2, col = c(grey(0), grey(0.6)), adj = 0)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$pred), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
 
 
 
-# NB
+points(counts_wost$year, counts_wost$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.3))
 
-fun  <- tsglm
-args_g_nb <- list(ts    = counts_g$count,
-                  model = list(past_obs  = 1,
-                               past_mean = NULL),
-                  xreg  = breed_season_depth,
-                  link  = "log",
-                  distr = "nbinom")
-fit_g_nb <- do.call(what = fun, 
-                    args = args_g_nb)
-forecast_g_nb <- predict(object  = fit_g_nb, 
-                         n.ahead = nforecast_years, 
-                         newxreg = future_breed_season_depth,
-                         level   = 0.95)
+points(counts_wost$year, fit_wost_p$fitted.values, type = "l", lwd = 3, col = grey(0.3))
+
+last_year   <- counts_wost$year[nrow(counts_wost)]
+last_count  <- counts_wost$count[nrow(counts_wost)]
+last_fitted <- fit_wost_p$fitted.values[nrow(counts_wost)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
 
 
 
-args_w_nb <- list(ts    = counts_w$count,
-                  model = list(past_obs  = 1,
-                               past_mean = NULL),
-                  xreg  = breed_season_depth,
-                  link  = "log",
-                  distr = "nbinom")
-fit_w_nb <- do.call(what = fun, 
-                    args = args_w_nb)
-forecast_w_nb <- predict(object  = fit_w_nb, 
-                         n.ahead = nforecast_years, 
-                         newxreg = future_breed_season_depth,
-                         level   = 0.95)
+points(counts_greg$year, counts_greg$count, pch = 3, lwd = 2, cex = 1.25, col = grey(0.5))
+
+points(counts_greg$year, fit_greg_p$fitted.values, type = "l", lwd = 3, col = grey(0.5))
+
+last_year   <- counts_greg$year[nrow(counts_greg)]
+last_count  <- counts_greg$count[nrow(counts_greg)]
+last_fitted <- fit_greg_p$fitted.values[nrow(counts_greg)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+
+
+
+points(counts_rosp$year, counts_rosp$count, pch = 2, lwd = 2, cex = 1.25, col = grey(0.7))
+
+points(counts_rosp$year, fit_rosp_p$fitted.values, type = "l", lwd = 3, col = grey(0.7))
+
+last_year   <- counts_rosp$year[nrow(counts_rosp)]
+last_count  <- counts_rosp$count[nrow(counts_rosp)]
+last_fitted <- fit_rosp_p$fitted.values[nrow(counts_rosp)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+
+
+
+text(rep(1986, 4), seq(100000, 85000, -5000), c("WHIB", "WOST", "GREG", "ROSP"), cex = 1.125, font = 2, col = c(grey(0), grey(0.3), grey(0.5), grey(0.7)), adj = 0)
+
 
 
 
 
 par(mar = c(3, 5, 3, 1))
-plot(counts_w$year, counts_w$count,
+plot(counts_whib$year, counts_whib$count,
      cex = 1.25, lwd = 2,
      ylim = c(0, 100000),
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, NB GARCH, Breeding Water Level", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, NBinom GARCH, Breeding Water Level", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -169,36 +269,210 @@ axis(2, at = seq(0, 100000, 5000), labels = FALSE, las = 1, cex.axis = 1.25, tck
 axis(2, at = seq(0, 100000, 10000), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.02)
 mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-points(counts_w$year, fit_w$fitted.values, type = "l", lwd = 3)
+points(counts_whib$year, fit_whib_nb$fitted.values, type = "l", lwd = 3)
 
-last_year   <- counts_w$year[nrow(counts_w)]
-last_count  <- counts_w$count[nrow(counts_w)]
-last_fitted <- fit_w_nb$fitted.values[nrow(counts_w)]
+last_year   <- counts_whib$year[nrow(counts_whib)]
+last_count  <- counts_whib$count[nrow(counts_whib)]
+last_fitted <- fit_whib_nb$fitted.values[nrow(counts_whib)]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_w_nb$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_w_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_w_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
-
-
-
-points(counts_g$year, counts_g$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.6))
-
-points(counts_g$year, fit_g$fitted.values, type = "l", lwd = 3, col = grey(0.6))
-
-last_year   <- counts_g$year[nrow(counts_g)]
-last_count  <- counts_g$count[nrow(counts_g)]
-last_fitted <- fit_g_nb$fitted.values[nrow(counts_g)]
-
-points(c(last_year, forecast_years), c(last_fitted, forecast_g_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.6))
-points(c(last_year, forecast_years), c(last_fitted, forecast_g_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.6))
-points(c(last_year, forecast_years), c(last_fitted, forecast_g_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.6))
-
-
-text(rep(1986, 2), c(95000, 90000), c("WOST & WHIB", "GREG"), cex = 1.125, font = 2, col = c(grey(0), grey(0.6)), adj = 0)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$pred), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
 
 
 
-summary(fit_g)
-summary(fit_w)
-summary(fit_g_nb)
-summary(fit_w_nb)
+points(counts_wost$year, counts_wost$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.3))
+
+points(counts_wost$year, fit_wost_nb$fitted.values, type = "l", lwd = 3, col = grey(0.3))
+
+last_year   <- counts_wost$year[nrow(counts_wost)]
+last_count  <- counts_wost$count[nrow(counts_wost)]
+last_fitted <- fit_wost_nb$fitted.values[nrow(counts_wost)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+
+
+
+points(counts_greg$year, counts_greg$count, pch = 3, lwd = 2, cex = 1.25, col = grey(0.5))
+
+points(counts_greg$year, fit_greg_nb$fitted.values, type = "l", lwd = 3, col = grey(0.5))
+
+last_year   <- counts_greg$year[nrow(counts_greg)]
+last_count  <- counts_greg$count[nrow(counts_greg)]
+last_fitted <- fit_greg_nb$fitted.values[nrow(counts_greg)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+
+
+
+points(counts_rosp$year, counts_rosp$count, pch = 2, lwd = 2, cex = 1.25, col = grey(0.7))
+
+points(counts_rosp$year, fit_rosp_nb$fitted.values, type = "l", lwd = 3, col = grey(0.7))
+
+last_year   <- counts_rosp$year[nrow(counts_rosp)]
+last_count  <- counts_rosp$count[nrow(counts_rosp)]
+last_fitted <- fit_rosp_nb$fitted.values[nrow(counts_rosp)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+
+
+
+text(rep(1986, 4), seq(100000, 85000, -5000), c("WHIB", "WOST", "GREG", "ROSP"), cex = 1.125, font = 2, col = c(grey(0), grey(0.3), grey(0.5), grey(0.7)), adj = 0)
+
+
+ 
+
+# without WHIB
+
+
+
+par(mar = c(3, 5, 3, 1))
+plot(counts_whib$year, counts_whib$count,
+     cex = 1.25, lwd = 2,
+     ylim = c(0, 20000),
+     xlim = c(1985, 2027),
+     xlab = "",
+     ylab = "",
+     main = "Everglades-Wide, Poisson GARCH, Breeding Water Level", las = 1, type = "n", bty = "L", xaxt = "n", yaxt = "n")
+axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
+axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
+axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
+
+
+axis(2, at = seq(0, 20000, 5000), labels = seq(0, 20000, 5000) / 1000, las = 1, cex.axis = 1.25)
+axis(2, at = seq(0, 20000, 1000), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
+mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
+
+
+
+
+points(counts_wost$year, counts_wost$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.3))
+
+points(counts_wost$year, fit_wost_p$fitted.values, type = "l", lwd = 3, col = grey(0.3))
+
+last_year   <- counts_wost$year[nrow(counts_wost)]
+last_count  <- counts_wost$count[nrow(counts_wost)]
+last_fitted <- fit_wost_p$fitted.values[nrow(counts_wost)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+
+
+
+points(counts_greg$year, counts_greg$count, pch = 3, lwd = 2, cex = 1.25, col = grey(0.5))
+
+points(counts_greg$year, fit_greg_p$fitted.values, type = "l", lwd = 3, col = grey(0.5))
+
+last_year   <- counts_greg$year[nrow(counts_greg)]
+last_count  <- counts_greg$count[nrow(counts_greg)]
+last_fitted <- fit_greg_p$fitted.values[nrow(counts_greg)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+
+
+
+points(counts_rosp$year, counts_rosp$count, pch = 2, lwd = 2, cex = 1.25, col = grey(0.7))
+
+points(counts_rosp$year, fit_rosp_p$fitted.values, type = "l", lwd = 3, col = grey(0.7))
+
+last_year   <- counts_rosp$year[nrow(counts_rosp)]
+last_count  <- counts_rosp$count[nrow(counts_rosp)]
+last_fitted <- fit_rosp_p$fitted.values[nrow(counts_rosp)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$pred), type = "l", lty = 2, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+
+
+
+text(rep(1986, 3), seq(20000, 18000, -1000), c("WOST", "GREG", "ROSP"), cex = 1.125, font = 2, col = c(grey(0.3), grey(0.5), grey(0.7)), adj = 0)
+
+
+
+
+
+
+
+
+
+
+par(mar = c(3, 5, 3, 1))
+plot(counts_whib$year, counts_whib$count,
+     cex = 1.25, lwd = 2,
+     ylim = c(0, 20000),
+     xlim = c(1985, 2027),
+     xlab = "",
+     ylab = "",
+     main = "Everglades-Wide, NBinom GARCH, Breeding Water Level", las = 1, bty = "L", type = "n", xaxt = "n", yaxt = "n")
+axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
+axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
+axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
+
+axis(2, at = seq(0, 20000, 5000), labels = seq(0, 20000, 5000) / 1000, las = 1, cex.axis = 1.25)
+axis(2, at = seq(0, 20000, 1000), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
+mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
+
+
+
+points(counts_wost$year, counts_wost$count, pch = 0, lwd = 2, cex = 1.25, col = grey(0.3))
+
+points(counts_wost$year, fit_wost_nb$fitted.values, type = "l", lwd = 3, col = grey(0.3))
+
+last_year   <- counts_wost$year[nrow(counts_wost)]
+last_count  <- counts_wost$count[nrow(counts_wost)]
+last_fitted <- fit_wost_nb$fitted.values[nrow(counts_wost)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.3))
+
+
+
+points(counts_greg$year, counts_greg$count, pch = 2, lwd = 2, cex = 1.25, col = grey(0.5))
+
+points(counts_greg$year, fit_greg_nb$fitted.values, type = "l", lwd = 3, col = grey(0.5))
+
+last_year   <- counts_greg$year[nrow(counts_greg)]
+last_count  <- counts_greg$count[nrow(counts_greg)]
+last_fitted <- fit_greg_nb$fitted.values[nrow(counts_greg)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.5))
+
+
+
+points(counts_rosp$year, counts_rosp$count, pch = 3, lwd = 2, cex = 1.25, col = grey(0.7))
+
+points(counts_rosp$year, fit_rosp_nb$fitted.values, type = "l", lwd = 3, col = grey(0.7))
+
+last_year   <- counts_rosp$year[nrow(counts_rosp)]
+last_count  <- counts_rosp$count[nrow(counts_rosp)]
+last_fitted <- fit_rosp_nb$fitted.values[nrow(counts_rosp)]
+
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$pred), type = "l", lty = 2, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+points(c(last_year, forecast_years), c(last_fitted, forecast_rosp_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2, col = grey(0.7))
+
+
+
+text(rep(1986, 3), seq(20000, 18000, -1000), c("WOST", "GREG", "ROSP"), cex = 1.125, font = 2, col = c(grey(0.3), grey(0.5), grey(0.7)), adj = 0)
+
+
+
+
+
+
+
+
+
+

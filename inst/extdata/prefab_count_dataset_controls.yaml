@@ -7,7 +7,7 @@ all_total:
   args:
     name: all_total
     filename: counts_all_total.csv
-    minyear: 1986
+    minyear: 1991
     maxyear: !expr this_year()
     level: all 
     species:
@@ -15,42 +15,27 @@ all_total:
 all_WOST:
   metadata:
     name: all_WOST
-    descriptor: Total species counts, Everglades-wide.
-    text: Total species counts, Everglades-wide.
+    descriptor: WOST species counts, Everglades-wide.
+    text: Counts for WOST, Everglades-wide.
   fun: prepare_max_counts
   args:
     name: all_WOST
     filename: counts_all_WOST.csv
-    minyear: 1986
+    minyear: 1991
     maxyear: !expr this_year()
     level: all 
     species:
       - WOST
-all_WOSTWHIB:
-  metadata:
-    name: all_WOSTWHIB
-    descriptor: Total species counts, Everglades-wide.
-    text: Total species counts, Everglades-wide.
-  fun: prepare_max_counts
-  args:
-    name: all_WOSTWHIB
-    filename: counts_all_WOSTWHIB.csv
-    minyear: 1986
-    maxyear: !expr this_year()
-    level: all 
-    species:
-      - WOST
-      - WHIB
 all_WHIB:
   metadata:
     name: all_WHIB
-    descriptor: Total species counts, Everglades-wide.
-    text: Total species counts, Everglades-wide.
+    descriptor: WHIB species counts, Everglades-wide.
+    text: Counts for WHIB, Everglades-wide.
   fun: prepare_max_counts
   args:
     name: all_WHIB
     filename: counts_all_WHIB.csv
-    minyear: 1986
+    minyear: 1991
     maxyear: !expr this_year()
     level: all 
     species:
@@ -58,14 +43,109 @@ all_WHIB:
 all_GREG:
   metadata:
     name: all_GREG
-    descriptor: Total species counts, Everglades-wide.
-    text: Total species counts, Everglades-wide.
+    descriptor: GREG species counts, Everglades-wide.
+    text: Counts for GREG, Everglades-wide.
   fun: prepare_max_counts
   args:
     name: all_GREG
     filename: counts_all_GREG.csv
-    minyear: 1986
+    minyear: 1991
     maxyear: !expr this_year()
     level: all 
     species:
       - GREG
+all_ROSP:
+  metadata:
+    name: all_ROSP
+    descriptor: ROSP species counts, Everglades-wide.
+    text: Counts for ROSP, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_ROSP
+    filename: counts_all_ROSP.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - ROSP
+WCA_3A_total:
+  metadata:
+    name: WCA_3A_total
+    descriptor: Total species counts, in WCA 3A.
+    text: Total species counts, in WCA 3A.
+  fun: prepare_max_counts
+  args:
+    name: WCA_3A_total
+    filename: counts_WCA_3A_total.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: wca
+	wca:
+      - 3A	
+    species:
+      - total
+WCA_3A_WOST:
+  metadata:
+    name: WCA_3A_WOST
+    descriptor: WOST species counts, in WCA 3A.
+    text: Counts for WOST, in WCA 3A.
+  fun: prepare_max_counts
+  args:
+    name: WCA_3A_WOST
+    filename: counts_WCA_3A_WOST.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: wca 
+	wca:
+      - 3A
+    species:
+      - WOST
+WCA_3A_WHIB:
+  metadata:
+    name: WCA_3A_WHIB
+    descriptor: WHIB species counts, in WCA 3A.
+    text: Counts for WHIB, in WCA 3A.
+  fun: prepare_max_counts
+  args:
+    name: WCA_3A_WHIB
+    filename: counts_WCA_3A_WHIB.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: wca 
+	wca:
+      - 3A
+    species:
+      - WHIB
+WCA_3A_GREG:
+  metadata:
+    name: WCA_3A_GREG
+    descriptor: GREG species counts, in WCA 3A.
+    text: Counts for GREG, in WCA 3A.
+  fun: prepare_max_counts
+  args:
+    name: WCA_3A_GREG
+    filename: counts_WCA_3A_GREG.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: wca 
+	wca:
+      - 3A
+    species:
+      - GREG
+WCA_3A_ROSP:
+  metadata:
+    name: WCA_3A_GREG
+    descriptor: ROSP species counts, in WCA 3A.
+    text: Counts for ROSP, in WCA 3A.
+  fun: prepare_max_counts
+  args:
+    name: WCA_3A_ROSP
+    filename: counts_WCA_3A_ROSP.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: wca 
+	wca:
+      - 3A
+    species:
+      - GREG
+

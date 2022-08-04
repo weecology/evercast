@@ -46,101 +46,91 @@ covariates_wost <- data.frame(init_depth, init_depth2, pre_recession, post_reces
 plot(data.frame(init_depth, init_depth2, reversals, pre_recession, post_recession))
 cor(data.frame(init_depth, init_depth2, reversals, pre_recession, post_recession))
 
+greg_train <- data.frame(counts_greg[counts_greg$train, ], covariates[covariates$train, ])
+wost_train <- data.frame(counts_wost[counts_wost$train, ], covariates[covariates$train, ])
+whib_train <- data.frame(counts_whib[counts_whib$train, ], covariates[covariates$train, ])
+rosp_train <- data.frame(counts_rosp[counts_rosp$train, ], covariates[covariates$train, ])
+
+greg_test <- data.frame(count = c(counts_greg$count[!counts_greg$train], NA), covariates[!covariates$train, ])
+wost_test <- data.frame(count = c(counts_wost$count[!counts_wost$train], NA), covariates[!covariates$train, ])
+whib_test <- data.frame(count = c(counts_whib$count[!counts_whib$train], NA), covariates[!covariates$train, ])
+rosp_test <- data.frame(count = c(counts_rosp$count[!counts_rosp$train], NA), covariates[!covariates$train, ])
+
 
 
 # Poisson
 
-fun  <- tsglm
-args_greg_p <- list(ts    = counts_greg$count[counts_greg$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = reversals[covariates$train],
-                    link  = "log",
-                    distr = "poisson")
+fun  <- glm
+args_greg_p <- list(formula  = count ~ year + reversals,
+                    data     = greg_train,
+                    family   = "poisson")
 fit_greg_p <- do.call(what = fun, 
                       args = args_greg_p)
 forecast_greg_p <- predict(object  = fit_greg_p, 
-                           n.ahead = nforecast_years, 
-                           newxreg = reversals[!covariates$train],
-                           level   = 0.95)
+                           newdata = greg_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_greg_p$residuals))
+ 
 
-
-
-fun  <- tsglm
-args_whib_p <- list(ts    = counts_whib$count[counts_whib$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = reversals[covariates$train],
-                    link  = "log",
-                    distr = "poisson")
+fun  <- glm
+args_whib_p <- list(formula  = count ~ year + reversals,
+                    data     = whib_train,
+                    family   = "poisson")
 fit_whib_p <- do.call(what = fun, 
                       args = args_whib_p)
 forecast_whib_p <- predict(object  = fit_whib_p, 
-                           n.ahead = nforecast_years, 
-                           newxreg = reversals[!covariates$train],
-                           level   = 0.95)
+                           newdata = whib_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_whib_p$residuals))
 
 
-fun  <- tsglm
-args_wost_p <- list(ts    = counts_wost$count[counts_wost$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = covariates_wost[covariates$train, ],
-                    link  = "log",
-                    distr = "poisson")
+fun  <- glm
+args_wost_p <- list(formula  = count ~ year + init_depth + init_depth2 + pre_recession + post_recession,
+                    data     = wost_train,
+                    family   = "poisson")
 fit_wost_p <- do.call(what = fun, 
                       args = args_wost_p)
 forecast_wost_p <- predict(object  = fit_wost_p, 
-                           n.ahead = nforecast_years, 
-                           newxreg = covariates_wost[!covariates$train, ],
-                           level   = 0.95)
+                           newdata = wost_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_wost_p$residuals))
+
 
 # N Binom
+glm.nb <- MASS::glm.nb
 
-fun  <- tsglm
-args_greg_nb <- list(ts    = counts_greg$count[counts_greg$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = reversals[covariates$train],
-                    link  = "log",
-                    distr = "nbinom")
+
+fun  <- glm.nb
+args_greg_nb <- list(formula  = count ~ year + reversals,
+                    data     = greg_train)
 fit_greg_nb <- do.call(what = fun, 
                       args = args_greg_nb)
 forecast_greg_nb <- predict(object  = fit_greg_nb, 
-                           n.ahead = nforecast_years, 
-                           newxreg = reversals[!covariates$train],
-                           level   = 0.95)
+                           newdata = greg_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_greg_nb$residuals))
+ 
 
-
-
-fun  <- tsglm
-args_whib_nb <- list(ts    = counts_whib$count[counts_whib$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = reversals[covariates$train],
-                    link  = "log",
-                    distr = "nbinom")
+fun  <- glm.nb
+args_whib_nb <- list(formula  = count ~ year + reversals,
+                    data     = whib_train)
 fit_whib_nb <- do.call(what = fun, 
                       args = args_whib_nb)
 forecast_whib_nb <- predict(object  = fit_whib_nb, 
-                           n.ahead = nforecast_years, 
-                           newxreg = reversals[!covariates$train],
-                           level   = 0.95)
+                           newdata = whib_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_whib_nb$residuals))
 
 
-fun  <- tsglm
-args_wost_nb <- list(ts    = counts_wost$count[counts_wost$train],
-                    model = list(past_obs  = 1,
-                                 past_mean = NULL),
-                    xreg  = covariates_wost[covariates$train, ],
-                    link  = "log",
-                    distr = "nbinom")
+fun  <- glm.nb
+args_wost_nb <- list(formula  = count ~ year + init_depth + init_depth2 + pre_recession + post_recession,
+                    data     = wost_train)
 fit_wost_nb <- do.call(what = fun, 
                       args = args_wost_nb)
 forecast_wost_nb <- predict(object  = fit_wost_nb, 
-                           n.ahead = nforecast_years, 
-                           newxreg = covariates_wost[!covariates$train, ],
-                           level   = 0.95)
+                           newdata = wost_test,
+                           se.fit  = TRUE,
+                           type    = "link", dispersion = sd(fit_wost_nb$residuals))
 
 
 
@@ -154,7 +144,7 @@ plot(counts_whib$year, counts_whib$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, Poisson GARCH, WHIB", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, Poisson GLM, WHIB", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -170,9 +160,10 @@ last_year   <- counts_whib$year[nrow(counts_whib[counts_whib$train, ])]
 last_count  <- counts_whib$count[nrow(counts_whib[counts_whib$train, ])]
 last_fitted <- fit_whib_p$fitted.values[nrow(counts_whib[counts_whib$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
+
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_p$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_p$fit + 1.96 * forecast_whib_p$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_p$fit - 1.96 * forecast_whib_p$se.fit)), type = "l", lty = 3, lwd = 2)
 
 
 
@@ -183,7 +174,7 @@ plot(counts_wost$year, counts_wost$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, Poisson GARCH, WOST", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, Poisson GLM, WOST", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -203,9 +194,10 @@ last_year   <- counts_wost$year[nrow(counts_wost[counts_wost$train, ])]
 last_count  <- counts_wost$count[nrow(counts_wost[counts_wost$train, ])]
 last_fitted <- fit_wost_p$fitted.values[nrow(counts_wost[counts_wost$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
+
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_p$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_p$fit + 1.96 * forecast_wost_p$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_p$fit - 1.96 * forecast_wost_p$se.fit)), type = "l", lty = 3, lwd = 2)
 
 
 
@@ -217,7 +209,7 @@ plot(counts_greg$year, counts_greg$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, Poisson GARCH, GREG", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, Poisson GLM, GREG", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -237,9 +229,9 @@ last_year   <- counts_greg$year[nrow(counts_greg[counts_greg$train, ])]
 last_count  <- counts_greg$count[nrow(counts_greg[counts_greg$train, ])]
 last_fitted <- fit_greg_p$fitted.values[nrow(counts_greg[counts_greg$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_p$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_p$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_p$fit + 1.96 * forecast_greg_p$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_p$fit - 1.96 * forecast_greg_p$se.fit)), type = "l", lty = 3, lwd = 2)
 
 
 
@@ -252,7 +244,7 @@ plot(counts_whib$year, counts_whib$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, N. Binomial GARCH, WHIB", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, N. Binomial GLM, WHIB", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -268,9 +260,11 @@ last_year   <- counts_whib$year[nrow(counts_whib[counts_whib$train, ])]
 last_count  <- counts_whib$count[nrow(counts_whib[counts_whib$train, ])]
 last_fitted <- fit_whib_nb$fitted.values[nrow(counts_whib[counts_whib$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_whib_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
+
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_nb$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_nb$fit + 1.96 * forecast_whib_nb$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_whib_nb$fit - 1.96 * forecast_whib_nb$se.fit)), type = "l", lty = 3, lwd = 2)
+
 
 
 
@@ -281,7 +275,7 @@ plot(counts_wost$year, counts_wost$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, N. Binomial GARCH, WOST", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, N. Binomial GLM, WOST", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -301,9 +295,10 @@ last_year   <- counts_wost$year[nrow(counts_wost[counts_wost$train, ])]
 last_count  <- counts_wost$count[nrow(counts_wost[counts_wost$train, ])]
 last_fitted <- fit_wost_nb$fitted.values[nrow(counts_wost[counts_wost$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_wost_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
+
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_nb$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_nb$fit + 1.96 * forecast_wost_nb$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_wost_nb$fit - 1.96 * forecast_wost_nb$se.fit)), type = "l", lty = 3, lwd = 2)
 
 
 
@@ -315,7 +310,7 @@ plot(counts_greg$year, counts_greg$count,
      xlim = c(1985, 2027),
      xlab = "",
      ylab = "",
-     main = "Everglades-Wide, N. Binomial GARCH, GREG", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+     main = "Everglades-Wide, N. Binomial GLM, GREG", las = 1, bty = "L", xaxt = "n", yaxt = "n")
 axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
 axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
 axis(1, at = seq(1980, 2027, 1), labels = FALSE, tck = -0.005)
@@ -335,10 +330,10 @@ last_year   <- counts_greg$year[nrow(counts_greg[counts_greg$train, ])]
 last_count  <- counts_greg$count[nrow(counts_greg[counts_greg$train, ])]
 last_fitted <- fit_greg_nb$fitted.values[nrow(counts_greg[counts_greg$train, ])]
 
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$pred), type = "l", lty = 2, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "upper"]), type = "l", lty = 3, lwd = 2)
-points(c(last_year, forecast_years), c(last_fitted, forecast_greg_nb$interval[ , "lower"]), type = "l", lty = 3, lwd = 2)
 
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_nb$fit)), type = "l", lty = 2, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_nb$fit + 1.96 * forecast_greg_nb$se.fit)), type = "l", lty = 3, lwd = 2)
+points(c(last_year, forecast_years), c(last_fitted, exp(forecast_greg_nb$fit - 1.96 * forecast_greg_nb$se.fit)), type = "l", lty = 3, lwd = 2)
 
 
 

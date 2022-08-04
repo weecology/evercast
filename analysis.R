@@ -4,7 +4,7 @@
 devtools::document()
 
 main <- "~/testing"
-#setup_dir(main = main)
+setup_dir(main = main)
 
 #fill_data(main)
 

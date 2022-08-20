@@ -1,0 +1,13 @@
+all_water:
+  metadata:
+    name: all_water
+    descriptor: Everglades-wide water level covariates.
+    text: Everglades-wide water level covariates.
+  fun: prepare_covariate_dataset
+  args:
+    name: all_water
+    filename: covariates_all_water.csv
+    datafile: Water/eden_covariates.csv
+    minyear: 1986
+    maxyear: 2022.0
+    region: all

@@ -1,0 +1,27 @@
+setup:
+  date: '2022-08-19'
+  R_version:
+    platform: x86_64-w64-mingw32
+    arch: x86_64
+    os: mingw32
+    crt: ucrt
+    system: x86_64, mingw32
+    status: ''
+    major: '4'
+    minor: '2.1'
+    year: '2022'
+    month: '06'
+    day: '23'
+    svn rev: '82513'
+    language: R
+    version.string: R version 4.2.1 (2022-06-23 ucrt)
+    nickname: Funny-Looking Kid
+  evercast_version: 0.1.0
+tree:
+  main: ./testing
+  subs:
+    forecasts: forecasts
+    fits: fits
+    models: models
+    resources: resources
+    data: data

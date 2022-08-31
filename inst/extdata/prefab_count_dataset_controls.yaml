@@ -7,8 +7,64 @@ all_total:
   args:
     name: all_total
     filename: counts_all_total.csv
-    minyear: 1986
+    minyear: 1991
     maxyear: !expr this_year()
     level: all 
     species:
       - total
+all_WOST:
+  metadata:
+    name: all_WOST
+    descriptor: WOST species counts, Everglades-wide.
+    text: Counts for WOST, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_WOST
+    filename: counts_all_WOST.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - WOST
+all_WHIB:
+  metadata:
+    name: all_WHIB
+    descriptor: WHIB species counts, Everglades-wide.
+    text: Counts for WHIB, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_WHIB
+    filename: counts_all_WHIB.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - WHIB
+all_GREG:
+  metadata:
+    name: all_GREG
+    descriptor: GREG species counts, Everglades-wide.
+    text: Counts for GREG, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_GREG
+    filename: counts_all_GREG.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - GREG
+all_ROSP:
+  metadata:
+    name: all_ROSP
+    descriptor: ROSP species counts, Everglades-wide.
+    text: Counts for ROSP, Everglades-wide.
+  fun: prepare_max_counts
+  args:
+    name: all_ROSP
+    filename: counts_all_ROSP.csv
+    minyear: 1991
+    maxyear: !expr this_year()
+    level: all 
+    species:
+      - ROSP

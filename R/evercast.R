@@ -9,6 +9,7 @@
 #' @keywords package
 #'
 #' @importFrom forecast auto.arima forecast
+#' @importFrom scoringRules crps_nbinom crps_pois crps_sample logs_nbinom logs_pois logs_sample
 #' @importFrom tscount tsglm 
 #' @importFrom utils packageDescription read.csv sessionInfo write.csv
 #' @importFrom wader download_observations load_datafile max_counts

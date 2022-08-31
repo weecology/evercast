@@ -82,7 +82,7 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="fu">prefab_count_datasets</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_total"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_total" "all_WOST"  "all_WHIB"  "all_GREG"  "all_ROSP" </span>
 <span class="r-in"><span> <span class="fu">prefab_count_dataset_controls</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $all_total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $all_total$metadata</span>
@@ -107,7 +107,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "counts_all_total.csv"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $all_total$args$minyear</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1991</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $all_total$args$maxyear</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2022</span>
@@ -117,6 +117,150 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $all_total$args$species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "total"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$metadata$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_WOST"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$metadata$descriptor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "WOST species counts, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$metadata$text</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Counts for WOST, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$fun</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "prepare_max_counts"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_WOST"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$filename</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "counts_all_WOST.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$minyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$maxyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WOST$args$species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "WOST"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$metadata$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_WHIB"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$metadata$descriptor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "WHIB species counts, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$metadata$text</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Counts for WHIB, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$fun</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "prepare_max_counts"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_WHIB"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$filename</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "counts_all_WHIB.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$minyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$maxyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_WHIB$args$species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "WHIB"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$metadata$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_GREG"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$metadata$descriptor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "GREG species counts, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$metadata$text</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Counts for GREG, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$fun</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "prepare_max_counts"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_GREG"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$filename</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "counts_all_GREG.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$minyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$maxyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_GREG$args$species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "GREG"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$metadata$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_ROSP"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$metadata$descriptor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ROSP species counts, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$metadata$text</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Counts for ROSP, Everglades-wide."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$fun</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "prepare_max_counts"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all_ROSP"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$filename</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "counts_all_ROSP.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$minyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$maxyear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "all"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $all_ROSP$args$species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ROSP"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

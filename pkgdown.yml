@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   GettingStarted: GettingStarted.html
-last_built: 2022-07-28T03:13Z
+last_built: 2022-08-31T17:36Z
 urls:
   reference: https://weecology.github.io/evercast/reference
   article: https://weecology.github.io/evercast/articles

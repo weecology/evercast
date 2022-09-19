@@ -88,6 +88,11 @@ summary <- data.frame(species  = NULL,
                       crps     = NULL)
 
 
+cols <- c(greg = rgb(33, 23, 144, maxColorValue = 256), 
+          wost = rgb(192, 58, 131, maxColorValue = 256),
+          whib = rgb(129, 33, 167, maxColorValue = 256),
+          rosp = rgb(233, 112, 88, maxColorValue = 256))
+
 for (origin in 1:norigins) {
 
   message("modeling origin ", origins[origin], " ...")
@@ -146,7 +151,7 @@ for (origin in 1:norigins) {
                                    logs = logs_sample(greg_test$count, draws_greg_p[[origin]]),
                                    logs_lim = logs_sample(greg_test$count, draws_greg_p_lim[[origin]]))
    
-    tiff(file.path(main, "forecasts", paste0("greg_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("greg_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_greg$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -161,7 +166,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", col = cols["greg"], pch = 16)
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -172,7 +177,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_greg$year[counts_greg$train], fit_greg_p[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_greg$year[counts_greg$train], fit_greg_p[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["greg"])
 
     last_year   <- counts_greg$year[nrow(counts_greg[counts_greg$train, ])]
     last_count  <- counts_greg$count[nrow(counts_greg[counts_greg$train, ])]
@@ -180,14 +185,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_greg_p[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["greg"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_greg_p[[origin]]$fit + 1.96 * forecast_greg_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["greg"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_greg_p[[origin]]$fit - 1.96 * forecast_greg_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_greg$year[counts_greg$test], counts_greg$count[counts_greg$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["greg"])
+    points(counts_greg$year[counts_greg$test], counts_greg$count[counts_greg$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["greg"])
 
     dev.off()
 
@@ -227,7 +232,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(whib_test$count, draws_whib_p_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("whib_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("whib_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_whib$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -242,7 +247,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", col = cols["whib"], pch = 16)
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -253,7 +258,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_whib$year[counts_whib$train], fit_whib_p[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_whib$year[counts_whib$train], fit_whib_p[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["whib"])
 
     last_year   <- counts_whib$year[nrow(counts_whib[counts_whib$train, ])]
     last_count  <- counts_whib$count[nrow(counts_whib[counts_whib$train, ])]
@@ -261,14 +266,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_whib_p[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["whib"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_whib_p[[origin]]$fit + 1.96 * forecast_whib_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["whib"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_whib_p[[origin]]$fit - 1.96 * forecast_whib_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_whib$year[counts_whib$test], counts_whib$count[counts_whib$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["whib"])
+    points(counts_whib$year[counts_whib$test], counts_whib$count[counts_whib$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["whib"])
 
     dev.off()
 
@@ -309,7 +314,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(wost_test$count, draws_wost_p_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("wost_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("wost_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_wost$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -324,7 +329,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", pch = 16, col = cols["wost"])
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -335,7 +340,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_wost$year[counts_wost$train], fit_wost_p[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_wost$year[counts_wost$train], fit_wost_p[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["wost"])
 
     last_year   <- counts_wost$year[nrow(counts_wost[counts_wost$train, ])]
     last_count  <- counts_wost$count[nrow(counts_wost[counts_wost$train, ])]
@@ -343,14 +348,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_wost_p[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["wost"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_wost_p[[origin]]$fit + 1.96 * forecast_wost_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["wost"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_wost_p[[origin]]$fit - 1.96 * forecast_wost_p[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_wost$year[counts_wost$test], counts_wost$count[counts_wost$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["wost"])
+    points(counts_wost$year[counts_wost$test], counts_wost$count[counts_wost$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["wost"])
 
     dev.off()
 
@@ -393,7 +398,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(greg_test$count, draws_greg_nb_lim[[origin]]))
 
  
-    tiff(file.path(main, "forecasts", paste0("greg_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("greg_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_greg$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -408,7 +413,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", pch = 16, col = cols["greg"])
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -419,7 +424,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_greg$year[counts_greg$train], fit_greg_nb[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_greg$year[counts_greg$train], fit_greg_nb[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["greg"])
 
     last_year   <- counts_greg$year[nrow(counts_greg[counts_greg$train, ])]
     last_count  <- counts_greg$count[nrow(counts_greg[counts_greg$train, ])]
@@ -427,14 +432,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_greg_nb[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["greg"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_greg_nb[[origin]]$fit + 1.96 * forecast_greg_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["greg"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_greg_nb[[origin]]$fit - 1.96 * forecast_greg_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_greg$year[counts_greg$test], counts_greg$count[counts_greg$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["greg"])
+    points(counts_greg$year[counts_greg$test], counts_greg$count[counts_greg$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["greg"])
 
     dev.off()
 
@@ -474,7 +479,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(whib_test$count, draws_whib_nb_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("whib_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("whib_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_whib$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -489,7 +494,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", pch = 16, col = cols["whib"])
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -500,7 +505,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_whib$year[counts_whib$train], fit_whib_nb[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_whib$year[counts_whib$train], fit_whib_nb[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["whib"])
 
     last_year   <- counts_whib$year[nrow(counts_whib[counts_whib$train, ])]
     last_count  <- counts_whib$count[nrow(counts_whib[counts_whib$train, ])]
@@ -508,14 +513,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_whib_nb[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["whib"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_whib_nb[[origin]]$fit + 1.96 * forecast_whib_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["whib"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_whib_nb[[origin]]$fit - 1.96 * forecast_whib_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_whib$year[counts_whib$test], counts_whib$count[counts_whib$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["whib"])
+    points(counts_whib$year[counts_whib$test], counts_whib$count[counts_whib$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["whib"])
 
     dev.off()
 
@@ -554,7 +559,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(wost_test$count, draws_wost_nb_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("wost_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("wost_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_wost$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -569,7 +574,7 @@ for (origin in 1:norigins) {
          xlim = c(1985, 2027),
          xlab = "",
          ylab = "",
-         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n", pch = 16, col = cols["wost"])
 
     axis(1, at = seq(1980, 2020, 10), cex.axis = 1.25)
     axis(1, at = seq(1980, 2025, 5), labels = FALSE, tck = -0.01)
@@ -580,7 +585,7 @@ for (origin in 1:norigins) {
     axis(2, at = seq(0, ymax, ystep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
     mtext(side = 2, "Colony Count (x 1,000)", line = 3.25, cex = 1.25)
 
-    points(counts_wost$year[counts_wost$train], fit_wost_nb[[origin]]$fitted.values, type = "l", lwd = 3)
+    points(counts_wost$year[counts_wost$train], fit_wost_nb[[origin]]$fitted.values, type = "l", lwd = 3, col = cols["wost"])
 
     last_year   <- counts_wost$year[nrow(counts_wost[counts_wost$train, ])]
     last_count  <- counts_wost$count[nrow(counts_wost[counts_wost$train, ])]
@@ -588,14 +593,14 @@ for (origin in 1:norigins) {
 
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_wost_nb[[origin]]$fit)), 
-           type = "l", lty = 2, lwd = 2)
+           type = "l", lty = 2, lwd = 2, col = cols["wost"])
     points(c(last_year, test_years),
            c(last_fitted, exp(forecast_wost_nb[[origin]]$fit + 1.96 * forecast_wost_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
+           type = "l", lty = 3, lwd = 2, col = cols["wost"])
     points(c(last_year, test_years), 
            c(last_fitted, exp(forecast_wost_nb[[origin]]$fit - 1.96 * forecast_wost_nb[[origin]]$se.fit)), 
-           type = "l", lty = 3, lwd = 2)
-    points(counts_wost$year[counts_wost$test], counts_wost$count[counts_wost$test], lwd = 2, cex = 1.25, pch = 0, lty = 3)
+           type = "l", lty = 3, lwd = 2, col = cols["wost"])
+    points(counts_wost$year[counts_wost$test], counts_wost$count[counts_wost$test], lwd = 2, cex = 1.25, pch = 1, lty = 3, col = cols["wost"])
 
     dev.off()
 
@@ -619,6 +624,101 @@ for (origin in 1:norigins) {
 write.csv(summary, file.path(main, "forecasts", "forecast_summary_table.csv"), row.names = FALSE)
 
 
+cmax   <- 1000 * ceiling(1/1000 * (max(c(summary$true_y, summary$pred_y))))
+cstep1 <- 50000
+cstep2 <- 25000
+cstep3 <- 5000
+clabs  <- seq(0, cmax, cstep1) / 1000
+ymax   <- cmax
 
+
+for (origin in 1:norigins) {
+
+
+  # Poisson
+
+    png(file.path(main, "forecasts", paste0("p_origin_", origins[[origin]], ".png")), height = 400, width = 400)
+
+    par(mar = c(5, 5, 1, 1))
+    plot(1, 1, type = "n",
+         cex = 1.25, lwd = 2,
+         ylim = c(0, ymax),
+         xlim = c(0, ymax),
+         xlab = "",
+         ylab = "",
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+
+    axis(1, at = seq(0, cmax, cstep1), labels = clabs, cex.axis = 1.25)
+    axis(1, at = seq(0, cmax, cstep2), labels = FALSE, tck = -0.01)
+    axis(1, at = seq(0, cmax, cstep3), labels = FALSE, tck = -0.005)
+    mtext(side = 1, "Predicted Count (x 1,000)", line = 3.25, cex = 1.25)
+
+    axis(2, at = seq(0, cmax, cstep1), labels = clabs, las = 1, cex.axis = 1.25)
+    axis(2, at = seq(0, cmax, cstep2), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.02)
+    axis(2, at = seq(0, cmax, cstep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
+    mtext(side = 2, "Observed Count (x 1,000)", line = 3.25, cex = 1.25, las = 0)
+
+    abline(a = 0, b = 1, lwd = 2)
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "WOST" & summary$model == "p"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "WOST" & summary$model == "p"]
+    points(x, y, pch = 16, col = cols["wost"])
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "WHIB" & summary$model == "p"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "WHIB" & summary$model == "p"]
+    points(x, y, pch = 16, col = cols["whib"])
+
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "GREG" & summary$model == "p"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "GREG" & summary$model == "p"]
+    points(x, y, pch = 16, col = cols["greg"])
+
+    dev.off()
+
+
+  # NB
+
+    png(file.path(main, "forecasts", paste0("nb_origin_", origins[[origin]], ".png")), height = 400, width = 400)
+
+    par(mar = c(5, 5, 1, 1))
+    plot(1, 1, type = "n",
+         cex = 1.25, lwd = 2,
+         ylim = c(0, ymax),
+         xlim = c(0, ymax),
+         xlab = "",
+         ylab = "",
+         main = "", las = 1, bty = "L", xaxt = "n", yaxt = "n")
+
+    axis(1, at = seq(0, cmax, cstep1), labels = clabs, cex.axis = 1.25)
+    axis(1, at = seq(0, cmax, cstep2), labels = FALSE, tck = -0.01)
+    axis(1, at = seq(0, cmax, cstep3), labels = FALSE, tck = -0.005)
+    mtext(side = 1, "Predicted Count (x 1,000)", line = 3.25, cex = 1.25)
+
+    axis(2, at = seq(0, cmax, cstep1), labels = clabs, las = 1, cex.axis = 1.25)
+    axis(2, at = seq(0, cmax, cstep2), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.02)
+    axis(2, at = seq(0, cmax, cstep3), labels = FALSE, las = 1, cex.axis = 1.25, tck = -0.01)
+    mtext(side = 2, "Observed Count (x 1,000)", line = 3.25, cex = 1.25, las = 0)
+
+    abline(a = 0, b = 1, lwd = 2)
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "WOST" & summary$model == "nb"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "WOST" & summary$model == "nb"]
+    points(x, y, pch = 16, col = cols["wost"])
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "WHIB" & summary$model == "nb"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "WHIB" & summary$model == "nb"]
+    points(x, y, pch = 16, col = cols["whib"])
+
+
+    x <- summary$pred_y[summary$origin == origins[origin] & summary$species == "GREG" & summary$model == "nb"]
+    y <- summary$true_y[summary$origin == origins[origin] & summary$species == "GREG" & summary$model == "nb"]
+    points(x, y, pch = 16, col = cols["greg"])
+
+    dev.off()
+
+
+
+
+}
 
 

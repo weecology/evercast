@@ -1,5 +1,5 @@
 setup:
-  date: '2022-08-19'
+  date: '2022-09-19'
   R_version:
     platform: x86_64-w64-mingw32
     arch: x86_64

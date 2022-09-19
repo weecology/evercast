@@ -151,7 +151,7 @@ for (origin in 1:norigins) {
                                    logs = logs_sample(greg_test$count, draws_greg_p[[origin]]),
                                    logs_lim = logs_sample(greg_test$count, draws_greg_p_lim[[origin]]))
    
-    tiff(file.path(main, "forecasts", paste0("greg_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("greg_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_greg$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -232,7 +232,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(whib_test$count, draws_whib_p_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("whib_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("whib_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_whib$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -314,7 +314,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(wost_test$count, draws_wost_p_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("wost_p_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("wost_p_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_wost$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -398,7 +398,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(greg_test$count, draws_greg_nb_lim[[origin]]))
 
  
-    tiff(file.path(main, "forecasts", paste0("greg_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("greg_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_greg$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -479,7 +479,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(whib_test$count, draws_whib_nb_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("whib_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("whib_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_whib$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -559,7 +559,7 @@ for (origin in 1:norigins) {
                                    logs_lim = logs_sample(wost_test$count, draws_wost_nb_lim[[origin]]))
 
 
-    tiff(file.path(main, "forecasts", paste0("wost_nb_origin_", origins[[origin]], ".tiff")), height = 4, width = 8, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("wost_nb_origin_", origins[[origin]], ".png")), height = 400, width = 800)
 
     ymax <- 10^ceiling(log10(max(counts_wost$count, na.rm = TRUE)))
     ystep1 <- ymax / 4
@@ -637,7 +637,7 @@ for (origin in 1:norigins) {
 
   # Poisson
 
-    tiff(file.path(main, "forecasts", paste0("p_origin_", origins[[origin]], ".tiff")), height = 6, width = 6, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("p_origin_", origins[[origin]], ".png")), height = 400, width = 400)
 
     par(mar = c(5, 5, 1, 1))
     plot(1, 1, type = "n",
@@ -678,7 +678,7 @@ for (origin in 1:norigins) {
 
   # NB
 
-    tiff(file.path(main, "forecasts", paste0("nb_origin_", origins[[origin]], ".tiff")), height = 6, width = 6, units = "in", res = 200, compression = "lzw")
+    png(file.path(main, "forecasts", paste0("nb_origin_", origins[[origin]], ".png")), height = 400, width = 400)
 
     par(mar = c(5, 5, 1, 1))
     plot(1, 1, type = "n",
